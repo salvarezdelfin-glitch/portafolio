@@ -42,36 +42,26 @@ nav{display:flex;flex-wrap:wrap;gap:6px clamp(14px,2.2vw,28px)}
 nav a{font-size:14px;color:var(--muted);padding:5px 0;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
 nav a:hover{color:var(--fg)}
 nav a.on{color:var(--fg);border-color:var(--fg)}
-/* on the home page the header floats over the hero until you scroll */
-body.home header{position:fixed;left:0;right:0;background:linear-gradient(rgba(0,0,0,.55),transparent)}
+/* on the home page the small name in the header appears once the big one scrolls away */
 body.home header:not(.scrolled) .brand{opacity:0;pointer-events:none}
-body.home header:not(.scrolled) nav a{color:rgba(255,255,255,.8)}
-body.home header.scrolled{background:rgba(15,15,16,.92)}
 
 main{flex:1;padding-bottom:88px}
 .view{animation:fade .35s ease both}
 @keyframes fade{from{opacity:0}to{opacity:1}}
 
 /* hero */
-.hero{position:relative;height:min(88vh,920px);height:min(88svh,920px);min-height:420px;overflow:hidden;background:var(--bg2)}
-.hero img{width:100%;height:100%;object-fit:cover;object-position:50% 40%}
-.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,11,.9) 0%,rgba(10,10,11,.25) 38%,transparent 60%)}
-.hero .txt{position:absolute;z-index:1;left:0;right:0;bottom:clamp(24px,5vw,56px)}
-.hero .txt .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px}
+.hero{padding:clamp(36px,7vw,96px) 0 clamp(4px,1vw,12px)}
 .hero h1{font:800 clamp(52px,9.5vw,148px)/.86 var(--name);text-transform:uppercase;letter-spacing:.005em}
 .hero .role{font-size:clamp(14px,1.4vw,17px);color:var(--soft);margin-top:16px}
-.hero .credit{font-size:13px;color:var(--soft);border-bottom:1px solid rgba(255,255,255,.3)}
-.hero .credit:hover{border-color:var(--fg)}
 
 /* sections + bento grid */
-.sec{padding-top:clamp(52px,7vw,96px);scroll-margin-top:60px}
+.sec{padding-top:clamp(40px,6vw,80px);scroll-margin-top:60px}
 .sec-h{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:clamp(16px,2vw,24px);padding-bottom:12px;border-bottom:1px solid var(--line)}
 .sec-h h2{font-size:clamp(22px,2.6vw,32px);font-weight:600;letter-spacing:-.015em}
 .sec-h span{font-size:13px;color:var(--muted)}
 .bento{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(24px,3vw,40px) var(--gap)}
-.bento:not(.even) .card:first-child{grid-column:1/-1}
-.bento:not(.even) .card:first-child .img{aspect-ratio:21/9}
-.bento.even{grid-template-columns:repeat(3,minmax(0,1fr))}
+.bento .card:first-child{grid-column:1/-1}
+.bento .card:first-child .img{aspect-ratio:21/9}
 .card{display:block}
 .card .img{overflow:hidden;background:var(--bg2);aspect-ratio:16/9;border-radius:3px}
 .card img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
@@ -135,17 +125,11 @@ footer a:hover{color:var(--fg)}
 .lb .nx{right:8px;top:50%;transform:translateY(-50%)}
 .lb .ct{position:absolute;bottom:20px;left:56px;right:56px;text-align:center;font-size:13px;color:var(--muted)}
 
-@media (min-width:761px) and (max-width:1100px){
-  .bento.even{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .bento.even .card:first-child{grid-column:1/-1}
-}
 @media (max-width:760px){
   header .wrap{flex-direction:column;align-items:flex-start;gap:8px;padding-top:12px;padding-bottom:10px}
   body.home header:not(.scrolled) .brand{display:none}
   .sec{scroll-margin-top:130px}
-  .hero{height:72vh;height:72svh;min-height:360px}
-  .hero .credit{display:none}
-  .bento,.bento.even,.pair{grid-template-columns:1fr}
+  .bento,.pair{grid-template-columns:1fr}
   .bento .card:first-child .img{aspect-ratio:16/9}
   .p-info{grid-template-columns:1fr}
   .about{grid-template-columns:1fr;grid-template-areas:"head" "photo" "bio" "skills" "contact"}
@@ -251,7 +235,6 @@ const PROJECTS = [
           'Lenguaje de formas directo, siluetas marcadas y proporciones agresivas. El lineup define la escala entre el dios colosal, el cazador y el jaguar emplumado.'],
     meta:[['Tipo','IP original · pitch de desarrollo visual'],['Rol','Creación de IP, diseño de personajes, worldbuilding'],['Público','Young adult / adulto (15–40)'],['Referencias','Primal, Samurai Jack, mitología mesoamericana'],['Herramientas','Photoshop, Procreate']] }
 ];
-const HERO = { img:'img/aldea-1.jpg', slug:'aldea-japonesa' };
 const ORDER = SECTIONS.flatMap(s => PROJECTS.filter(p => p.section === s.id));
 
 const src = s => `img/${s}.jpg`;
@@ -275,20 +258,16 @@ const card = p => `<a class="card" href="#/${p.slug}">
     <div class="cap"><h3>${esc(p.title)}</h3><span class="meta">${esc(p.tag)} · ${p.year}</span></div></a>`;
 
 function viewHome(){
-  const h = PROJECTS.find(p => p.slug === HERO.slug);
-  return `<div class="view">
-    <section class="hero">
-      <img src="${HERO.img}" alt="${esc(h.title)}" fetchpriority="high">
-      <div class="txt"><div class="wrap">
-        <div><h1>Sebastián<br>Álvarez Delfín</h1><div class="role">Concept Artist — Environment Design · Keyframes · Character Design</div></div>
-        <a class="credit" href="#/${h.slug}">${esc(h.title)}, ${h.year}</a>
-      </div></div>
+  return `<div class="view wrap">
+    <section class="hero" id="top">
+      <h1>Sebastián<br>Álvarez Delfín</h1>
+      <div class="role">Concept Artist — Environment Design · Keyframes · Character Design</div>
     </section>
-    <div class="wrap">
+    <div>
       ${SECTIONS.map(s => {
         const list = PROJECTS.filter(p => p.section === s.id);
         return `<section class="sec" id="${s.id}"><div class="sec-h"><h2>${s.title}</h2><span>${list.length} ${list.length === 1 ? 'proyecto' : 'proyectos'}</span></div>
-          <div class="bento${list.some(p => p.slug === HERO.slug) ? ' even' : ''}">${list.map(card).join('')}</div></section>`;
+          <div class="bento">${list.map(card).join('')}</div></section>`;
       }).join('')}
     </div>
   </div>`;
@@ -386,7 +365,7 @@ function route(){
 }
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 const hdr = document.getElementById('hdr');
-function onScroll(){ hdr.classList.toggle('scrolled', scrollY > (document.body.classList.contains('home') ? innerHeight * .5 : 8)); }
+function onScroll(){ hdr.classList.toggle('scrolled', scrollY > (document.body.classList.contains('home') ? ((document.getElementById('top') || {}).offsetHeight || 8) - 40 : 8)); }
 addEventListener('scroll', onScroll, { passive: true });
 addEventListener('hashchange', route);
 route();
