@@ -91,7 +91,9 @@ dd{font-size:14px;color:var(--fg)}
 /* about */
 .about{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(28px,6vw,88px);padding-top:clamp(40px,7vw,88px)}
 .about h1{font:800 clamp(44px,7vw,92px)/.92 var(--head);text-transform:uppercase}
-.about .role{color:var(--accent);font:600 13px/1.4 var(--body);letter-spacing:.14em;text-transform:uppercase;margin:16px 0 26px}
+.about .who{display:flex;align-items:center;gap:14px;margin:20px 0 26px}
+.about .who img{width:64px;height:64px;flex:none;border-radius:50%;object-fit:cover;filter:grayscale(.35) contrast(1.02);border:1px solid var(--line)}
+.about .role{color:var(--accent);font:600 13px/1.4 var(--body);letter-spacing:.14em;text-transform:uppercase}
 .about p{color:#d6d1c7;margin-bottom:14px;max-width:62ch}
 .skills{display:grid;gap:22px}
 .skills h3{font:600 11px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
@@ -263,7 +265,8 @@ function viewAbout(){
   return `<section class="view about">
     <div>
       <h1>Sebastián<br>Álvarez Delfín</h1>
-      <div class="role">Concept Artist & Visual Development Artist · Ciudad de México</div>
+      <div class="who"><img src="img/sebastian.jpg" alt="Foto de Sebastián Álvarez Delfín" width="64" height="64">
+      <div class="role">Concept Artist & Visual Development Artist · Ciudad de México</div></div>
       <p>¡Hola! Soy Sebastián Álvarez Delfín, Concept Artist e ilustrador en la Ciudad de México. Me especializo en Environment Design, Keyframe Illustration y Character Development para animación y videojuegos.</p>
       <p>Mi flujo de trabajo combina storytelling visual en 2D con blockouts 3D y escultura digital para entregar assets listos para producción y mundos visuales convincentes. Me enfoco en crear arte que sirva a la narrativa, enriquezca el worldbuilding y agilice los pipelines de diseño.</p>
       <div class="contact">
