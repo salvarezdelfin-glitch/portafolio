@@ -54,14 +54,16 @@ main{flex:1;padding-bottom:88px}
 .hero h1{font:800 clamp(40px,6vw,88px)/.9 var(--name);text-transform:uppercase;letter-spacing:.005em}
 .hero .role{font-size:clamp(14px,1.4vw,17px);color:var(--soft);margin-top:16px}
 
+/* page heading (Characters) */
+.page-h{padding:clamp(32px,5vw,72px) 0 clamp(20px,3vw,36px)}
+.page-h h1{font:800 clamp(40px,6vw,88px)/.9 var(--name);text-transform:uppercase}
+.page-h p{color:var(--soft);margin-top:14px;font-size:clamp(14px,1.4vw,17px)}
+
 /* sections + bento grid */
-.sec{padding-top:clamp(40px,6vw,80px);scroll-margin-top:60px}
-.sec-h{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:clamp(16px,2vw,24px);padding-bottom:12px;border-bottom:1px solid var(--line)}
-.sec-h h2{font-size:clamp(22px,2.6vw,32px);font-weight:600;letter-spacing:-.015em}
-.sec-h span{font-size:13px;color:var(--muted)}
+.gallery{margin-top:clamp(28px,4vw,56px)}
 .bento{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(24px,3vw,40px) var(--gap)}
-.bento .card:first-child{grid-column:1/-1}
-.bento .card:first-child .img{aspect-ratio:21/9}
+.bento .card.big{grid-column:1/-1}
+.bento .card.big .img{aspect-ratio:21/9}
 .card{display:block}
 .card .img{overflow:hidden;background:var(--bg2);aspect-ratio:16/9;border-radius:3px}
 .card img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
@@ -128,9 +130,8 @@ footer a:hover{color:var(--fg)}
 @media (max-width:760px){
   header .wrap{flex-direction:column;align-items:flex-start;gap:8px;padding-top:12px;padding-bottom:10px}
   body.home header:not(.scrolled) .brand{display:none}
-  .sec{scroll-margin-top:130px}
   .bento,.pair{grid-template-columns:1fr}
-  .bento .card:first-child .img{aspect-ratio:16/9}
+  .bento .card.big .img{aspect-ratio:16/9}
   .p-info{grid-template-columns:1fr}
   .about{grid-template-columns:1fr;grid-template-areas:"head" "photo" "bio" "skills" "contact"}
   .about .portrait{justify-self:start;max-width:240px;margin-bottom:24px}
@@ -139,7 +140,6 @@ footer a:hover{color:var(--fg)}
 @media (max-width:440px){
   dl{grid-template-columns:1fr;gap:2px}
   dd{margin-bottom:10px}
-  .sec-h span{display:none}
 }
 @media (hover:none){.card:hover img{transform:none}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -180,12 +180,14 @@ footer a:hover{color:var(--fg)}
 </div>
 
 <script>
-// Secciones de la portada, en orden. El primer proyecto de cada sección sale grande.
+// Secciones, en orden. page: en qué página del menú aparecen (Projects o Characters).
+// El primer proyecto de cada sección sale grande.
 const SECTIONS = [
-  { id:'environment', title:'Environment Design' },
-  { id:'keyframes',   title:'Keyframes' },
-  { id:'characters',  title:'Character Design' }
+  { id:'environment', title:'Environment Design', page:'projects' },
+  { id:'keyframes',   title:'Keyframes',          page:'projects' },
+  { id:'characters',  title:'Characters',         page:'characters' }
 ];
+// Para agregar un personaje nuevo: copia la entrada de Sangre y Obsidiana con section:'characters'.
 
 // finals: piezas terminadas (van primero, a todo lo ancho)
 // compare: [imagen, texto] que va lado a lado con el primer final (antes/después)
@@ -197,7 +199,7 @@ const PROJECTS = [
     desc:['Entorno de época de arquitectura tradicional japonesa. Linternas y vigas en primer plano enmarcan la vista a través del poblado hasta el Monte Fuji.'],
     meta:[['Enfoque','Composición por capas, arquitectura, matte painting'],['Pipeline','Thumbnails → Blender (blockout, iluminación) → Photoshop']] },
 
-  { slug:'camino-a-senguio', section:'environment', title:'Camino a Senguio', year:2025, tag:'Environment Design · EAS Studio', cover:'img/cover-camino.jpg',
+  { slug:'camino-a-senguio', section:'environment', title:'Camino a Senguio', year:2025, tag:'Environment Design', cover:'img/cover-camino.jpg',
     finals:['camino-1'],
     process:[['camino-2','Sketch de layout']],
     desc:['Entorno de un pueblo rural mexicano para el proyecto Camino a Senguio. Atención al deterioro de materiales, la vegetación nativa y los props urbanos.'],
@@ -214,13 +216,13 @@ const PROJECTS = [
     desc:['Serie de cinco keyframes para el cortometraje/IP Midnight Incorporated, a partir del guion y la visión del director. El reto fue mantener la consistencia de estilo e iluminación entre escenas, siguiendo un style guide establecido.'],
     meta:[['Rol','Keyframe & Environment Concept Artist'],['Dirección de arte','Luis F. Perez'],['Entregables','5 keyframes y layouts de exploración'],['Pipeline','Blender (blockout, iluminación) → Photoshop']] },
 
-  { slug:'caperucita-roja', section:'keyframes', title:'Caperucita Roja', year:2026, tag:'Keyframe · Rework', cover:'img/cover-caperucita.jpg',
+  { slug:'caperucita-roja', section:'keyframes', title:'Caperucita Roja', year:2026, tag:'Keyframe (rework)', cover:'img/cover-caperucita.jpg',
     finals:['caperucita-1'],
     compare:[['caperucita-1','2026'],['caperucita-2','2024 (original)']],
     process:[['caperucita-3','Boceto y exploración de color'],['caperucita-4','Exploración de key shot, moodboard y boceto']],
     desc:['Keyframe narrativo del momento previo a adentrarse en el bosque. La calidez del personaje contrasta con el tono misterioso del entorno para dirigir el punto focal.',
           'Rework de mi pieza de 2024: mejor jerarquía visual, temperatura de color y pintado del personaje.'],
-    meta:[['Tipo','Keyframe · Rework'],['Proceso','Thumbnails → exploración de color → pintura digital']] },
+    meta:[['Proceso','Thumbnails → exploración de color → pintura digital']] },
 
   { slug:'agente-secreto', section:'keyframes', title:'Agente Secreto', year:2025, tag:'Keyframes', cover:'img/cover-agente.jpg',
     finals:['agente-1','agente-2'],
@@ -228,13 +230,14 @@ const PROJECTS = [
     desc:['Dos keyframes de secuencia (SEQ0300 y SEQ0400) con su exploración de thumbnails.'],
     meta:[['Entregables','2 keyframes y thumbnails'],['Título provisional','Espía Secreto (así aparece en las láminas)']] },
 
-  { slug:'sangre-y-obsidiana', section:'characters', title:'Sangre y Obsidiana', year:2026, tag:'Character Design · IP original', cover:'img/cover-sangre.jpg',
+  { slug:'sangre-y-obsidiana', section:'characters', title:'Sangre y Obsidiana', year:2026, tag:'Character Design', cover:'img/cover-sangre.jpg',
     finals:['sangre-1'],
     desc:['Serie animada de fantasía oscura mesoamericana: un guerrero superviviente y una bestia primordial se unen para cazar al dios de la guerra que destruyó su clan.',
           'Lenguaje de formas directo, siluetas marcadas y proporciones agresivas. El lineup define la escala entre el dios colosal, el cazador y el jaguar emplumado.'],
     meta:[['Tipo','IP original · pitch de desarrollo visual'],['Rol','Creación de IP, diseño de personajes, worldbuilding'],['Público','Young adult / adulto (15–40)'],['Referencias','Primal, Samurai Jack, mitología mesoamericana'],['Herramientas','Photoshop, Procreate']] }
 ];
 const ORDER = SECTIONS.flatMap(s => PROJECTS.filter(p => p.section === s.id));
+const pageOf = p => SECTIONS.find(s => s.id === p.section).page;
 
 const src = s => `img/${s}.jpg`;
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -252,42 +255,45 @@ const allShots = p => {
   return out;
 };
 
-const card = p => `<a class="card" href="#/${p.slug}">
+const card = (p, i) => `<a class="card${i % 3 === 0 ? ' big' : ''}" href="#/${p.slug}">
     <div class="img"><img src="${p.cover}" alt="${esc(p.title)}" loading="lazy" decoding="async"></div>
-    <div class="cap"><h3>${esc(p.title)}</h3><span class="meta">${esc(p.tag)} · ${p.year}</span></div></a>`;
+    <div class="cap"><h3>${esc(p.title)}</h3><span class="meta">${p.year}</span></div></a>`;
 
 function viewHome(){
   return `<div class="view wrap">
     <section class="hero" id="top">
       <h1>Sebastián<br>Álvarez Delfín</h1>
-      <div class="role">Ilustrador y Concept Artist — Environment Design · Keyframes · Character Design</div>
+      <div class="role">Ilustrador y Concept Artist · Ciudad de México</div>
     </section>
-    <div>
-      ${SECTIONS.map(s => {
-        const list = PROJECTS.filter(p => p.section === s.id);
-        return `<section class="sec" id="${s.id}"><div class="sec-h"><h2>${s.title}</h2><span>${list.length} ${list.length === 1 ? 'proyecto' : 'proyectos'}</span></div>
-          <div class="bento">${list.map(card).join('')}</div></section>`;
-      }).join('')}
-    </div>
+    <div class="bento gallery">${ORDER.filter(p => pageOf(p) === 'projects').map(card).join('')}</div>
+  </div>`;
+}
+
+function viewCharacters(){
+  const list = PROJECTS.filter(p => p.section === 'characters');
+  return `<div class="view wrap">
+    <section class="page-h"><h1>Characters</h1><p>Diseño de personajes, lineups y desarrollo de IP original.</p></section>
+    <div class="bento">${list.map(card).join('')}</div>
   </div>`;
 }
 
 const fig = (s, i, cap, title) => `<figure class="shot" data-i="${i}"><div class="fr"><img src="${src(s)}" alt="${esc(title)}${cap ? ' — ' + esc(cap) : ''}" loading="${i ? 'lazy' : 'eager'}" decoding="async" onload="this.classList.add('ld')"></div>${cap ? `<figcaption>${esc(cap)}</figcaption>` : ''}</figure>`;
 
 function viewProject(p){
-  const i = ORDER.indexOf(p), prev = ORDER[(i - 1 + ORDER.length) % ORDER.length], next = ORDER[(i + 1) % ORDER.length];
+  const group = ORDER.filter(x => pageOf(x) === pageOf(p));
+  const i = group.indexOf(p), prev = group[(i - 1 + group.length) % group.length], next = group[(i + 1) % group.length];
   const shots = allShots(p), idx = s => shots.findIndex(x => x[0] === s);
   const sec = SECTIONS.find(s => s.id === p.section);
   const finals = p.compare
     ? `<div class="pair">${p.compare.map(([s, c]) => fig(s, idx(s), c, p.title)).join('')}</div>`
     : `<div class="finals">${p.finals.map(s => fig(s, idx(s), '', p.title)).join('')}</div>`;
   return `<article class="view wrap">
-    <div class="p-top"><div><h1>${esc(p.title)}</h1><div class="sub">${esc(p.tag)} · ${p.year}</div></div><a class="back" href="#/${sec.id}">← ${sec.title}</a></div>
+    <div class="p-top"><div><h1>${esc(p.title)}</h1><div class="sub">${p.year}</div></div><a class="back" href="#/${sec.page === 'characters' ? 'characters' : ''}">← ${sec.page === 'characters' ? 'Characters' : 'Projects'}</a></div>
     ${finals}
     <div class="p-info"><div>${p.desc.map(s => `<p>${esc(s)}</p>`).join('')}</div>
-      <dl>${p.meta.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl></div>
+      <dl>${[['Disciplina', p.tag], ...p.meta].map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl></div>
     ${p.process ? `<div class="label">Proceso</div><div class="pair">${p.process.map(([s, c]) => fig(s, idx(s), c, p.title)).join('')}</div>` : ''}
-    <div class="pager"><a href="#/${prev.slug}"><small>← Anterior</small><span>${esc(prev.title)}</span></a><a href="#/${next.slug}"><small>Siguiente →</small><span>${esc(next.title)}</span></a></div>
+    ${group.length < 2 ? '' : `<div class="pager"><a href="#/${prev.slug}"><small>← Anterior</small><span>${esc(prev.title)}</span></a><a href="#/${next.slug}"><small>Siguiente →</small><span>${esc(next.title)}</span></a></div>`}
   </article>`;
 }
 
@@ -337,29 +343,26 @@ let tx = null;
 lb.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
 lb.addEventListener('touchend', e => { if (tx === null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 50) show(li + (dx < 0 ? 1 : -1)); tx = null; });
 
-// router. #/environment, #/keyframes, #/characters scroll to a section of the home page.
-// Old links (#/personajes, #/about) keep working.
-const ALIAS = { personajes:'characters', 'sobre-mi':'about' };
+// router. Old links (#/environment, #/keyframes, #/personajes, #/sobre-mi) keep working.
+const ALIAS = { personajes:'characters', 'sobre-mi':'about', environment:'', keyframes:'' };
 let homeRendered = false;
 function route(){
   let h = location.hash.replace(/^#\/?/, '');
-  h = ALIAS[h] || h;
+  if (h in ALIAS) h = ALIAS[h];
   const p = PROJECTS.find(x => x.slug === h);
-  const sec = SECTIONS.find(s => s.id === h);
   let nav = '', title = `${SITE} — Ilustrador y Concept Artist`;
   current = null; close();
   document.body.classList.remove('home');
   if (p){ app.innerHTML = viewProject(p); current = p; shots = allShots(p); nav = p.section; title = `${p.title} — ${SITE}`; homeRendered = false; scrollTo(0, 0); }
+  else if (h === 'characters'){ app.innerHTML = viewCharacters(); nav = 'characters'; title = `Characters — ${SITE}`; homeRendered = false; scrollTo(0, 0); }
   else if (h === 'about'){ app.innerHTML = viewAbout(); nav = 'about'; title = `About me — ${SITE}`; homeRendered = false; scrollTo(0, 0); }
   else {
     document.body.classList.add('home');
-    const fresh = !homeRendered;
-    if (fresh){ app.innerHTML = viewHome(); homeRendered = true; }
-    if (sec){ nav = sec.id; title = `${sec.title} — ${SITE}`; setTimeout(() => document.getElementById(sec.id).scrollIntoView({ behavior: fresh ? 'auto' : 'smooth' }), fresh ? 60 : 0); }
-    else scrollTo(0, 0);
+    if (!homeRendered){ app.innerHTML = viewHome(); homeRendered = true; }
+    scrollTo(0, 0);
   }
   document.title = title;
-  const tab = nav === 'characters' || nav === 'about' ? nav : 'projects';
+  const tab = nav === 'about' ? 'about' : (SECTIONS.find(s => s.id === nav) || {}).page || 'projects';
   document.querySelectorAll('[data-nav]').forEach(a => a.classList.toggle('on', a.dataset.nav === tab));
   onScroll();
 }
