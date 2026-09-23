@@ -16,12 +16,13 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%230f0f10'/><text x='32' y='43' font-family='Arial,sans-serif' font-weight='700' font-size='28' text-anchor='middle' fill='%23ece8e1'>SA</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0f0f10; --bg2:#18181a; --line:#27272a; --fg:#ece8e1; --muted:#8f8b84; --soft:#c9c4bb;
   --font:Inter,system-ui,-apple-system,'Segoe UI',sans-serif;
-  --gut:clamp(16px,4vw,48px); --max:1440px;
+  --name:'Big Shoulders Display',Impact,'Arial Narrow',sans-serif;
+  --gut:clamp(16px,4vw,48px); --max:1440px; --gap:clamp(10px,1.2vw,16px);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--fg);font:15px/1.6 var(--font);-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
@@ -31,50 +32,76 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .wrap{width:100%;max-width:var(--max);margin:0 auto;padding:0 var(--gut)}
 
 /* header */
-header{position:sticky;top:0;z-index:20;background:rgba(15,15,16,.9);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .2s}
+header{position:sticky;top:0;z-index:20;background:rgba(15,15,16,.92);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:background .3s,border-color .3s}
 header.scrolled{border-color:var(--line)}
-header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:72px}
-.brand{display:grid;gap:2px}
-.brand b{font-weight:600;font-size:16px;letter-spacing:.01em}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:68px}
+.brand{display:grid;gap:1px;transition:opacity .3s}
+.brand b{font:800 clamp(20px,2vw,26px)/1 var(--name);text-transform:uppercase;letter-spacing:.03em}
 .brand span{font-size:12.5px;color:var(--muted)}
-nav{display:flex;gap:clamp(16px,2.6vw,32px)}
-nav a{font-size:14px;color:var(--muted);padding:6px 0;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
+nav{display:flex;flex-wrap:wrap;gap:6px clamp(14px,2.2vw,28px)}
+nav a{font-size:14px;color:var(--muted);padding:5px 0;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
 nav a:hover{color:var(--fg)}
 nav a.on{color:var(--fg);border-color:var(--fg)}
+/* on the home page the header floats over the hero until you scroll */
+body.home header{position:fixed;left:0;right:0;background:linear-gradient(rgba(0,0,0,.55),transparent)}
+body.home header:not(.scrolled) .brand{opacity:0;pointer-events:none}
+body.home header:not(.scrolled) nav a{color:rgba(255,255,255,.8)}
+body.home header.scrolled{background:rgba(15,15,16,.92)}
 
-main{flex:1;padding:clamp(20px,3vw,36px) 0 80px}
+main{flex:1;padding-bottom:88px}
 .view{animation:fade .35s ease both}
 @keyframes fade{from{opacity:0}to{opacity:1}}
 
-/* project grid */
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(28px,3.2vw,44px) clamp(14px,1.6vw,22px)}
+/* hero */
+.hero{position:relative;height:min(88vh,920px);height:min(88svh,920px);min-height:420px;overflow:hidden;background:var(--bg2)}
+.hero img{width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,11,.9) 0%,rgba(10,10,11,.25) 38%,transparent 60%)}
+.hero .txt{position:absolute;z-index:1;left:0;right:0;bottom:clamp(24px,5vw,56px)}
+.hero .txt .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px}
+.hero h1{font:800 clamp(52px,9.5vw,148px)/.86 var(--name);text-transform:uppercase;letter-spacing:.005em}
+.hero .role{font-size:clamp(14px,1.4vw,17px);color:var(--soft);margin-top:16px}
+.hero .credit{font-size:13px;color:var(--soft);border-bottom:1px solid rgba(255,255,255,.3)}
+.hero .credit:hover{border-color:var(--fg)}
+
+/* sections + bento grid */
+.sec{padding-top:clamp(52px,7vw,96px);scroll-margin-top:60px}
+.sec-h{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:clamp(16px,2vw,24px);padding-bottom:12px;border-bottom:1px solid var(--line)}
+.sec-h h2{font-size:clamp(22px,2.6vw,32px);font-weight:600;letter-spacing:-.015em}
+.sec-h span{font-size:13px;color:var(--muted)}
+.bento{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(24px,3vw,40px) var(--gap)}
+.bento:not(.even) .card:first-child{grid-column:1/-1}
+.bento:not(.even) .card:first-child .img{aspect-ratio:21/9}
+.bento.even{grid-template-columns:repeat(3,minmax(0,1fr))}
 .card{display:block}
 .card .img{overflow:hidden;background:var(--bg2);aspect-ratio:16/9;border-radius:3px}
 .card img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
 .card:hover img,.card:focus-visible img{transform:scale(1.03)}
 .card:focus-visible{outline:none}
 .card:focus-visible .img{outline:2px solid var(--fg);outline-offset:3px}
-.card .cap{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:12px}
-.card h2{font-size:16px;font-weight:600}
-.card .meta{font-size:13px;color:var(--muted);white-space:nowrap}
+.card .cap{display:grid;gap:2px;margin-top:12px}
+.card h3{font-size:16px;font-weight:600}
+.card .meta{font-size:13px;color:var(--muted)}
 
 /* project page */
-.p-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px 24px;margin-bottom:clamp(18px,2.4vw,28px)}
+.p-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:10px 24px;padding:clamp(22px,3vw,36px) 0 clamp(16px,2vw,22px)}
 .p-top h1{font-size:clamp(26px,3.4vw,40px);font-weight:600;letter-spacing:-.015em;line-height:1.1}
 .p-top .sub{color:var(--muted);font-size:14px;margin-top:6px}
 .back{font-size:13px;color:var(--muted)}
 .back:hover{color:var(--fg)}
-.p-info{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(20px,4vw,64px);padding:clamp(18px,2.4vw,26px) 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:clamp(20px,2.6vw,32px)}
+.p-info{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(20px,4vw,64px);padding:clamp(20px,2.6vw,30px) 0;margin:clamp(20px,2.6vw,32px) 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .p-info p{color:var(--soft);max-width:64ch}
 .p-info p + p{margin-top:10px}
 dl{display:grid;grid-template-columns:max-content 1fr;gap:9px 20px;align-content:start;font-size:14px}
 dt{color:var(--muted)}
-dd{color:var(--fg)}
-.shots{display:grid;gap:clamp(10px,1.2vw,16px)}
-.shot{background:var(--bg2);cursor:zoom-in;border-radius:3px;overflow:hidden}
+.finals{display:grid;gap:var(--gap)}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--gap)}
+.label{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:clamp(28px,4vw,44px) 0 14px}
+.shot{margin:0}
+.shot .fr{background:var(--bg2);cursor:zoom-in;border-radius:3px;overflow:hidden}
 .shot img{width:100%;height:auto;opacity:0;transition:opacity .5s}
 .shot img.ld{opacity:1}
-.pager{display:flex;justify-content:space-between;gap:16px;margin-top:clamp(36px,5vw,56px);padding-top:22px;border-top:1px solid var(--line)}
+.shot figcaption{font-size:13px;color:var(--muted);margin-top:8px}
+.pager{display:flex;justify-content:space-between;gap:16px;margin-top:clamp(40px,5vw,64px);padding-top:22px;border-top:1px solid var(--line)}
 .pager a{display:grid;gap:4px;max-width:48%}
 .pager a:last-child{text-align:right;margin-left:auto}
 .pager small{font-size:12px;color:var(--muted)}
@@ -82,17 +109,14 @@ dd{color:var(--fg)}
 .pager a:hover span{color:var(--muted)}
 
 /* about */
-.about{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);grid-template-areas:"head photo" "bio photo" "skills photo" "contact photo";column-gap:clamp(28px,6vw,96px);align-items:start;padding-top:clamp(8px,2vw,24px)}
+.about{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);grid-template-areas:"head photo" "bio photo" "skills photo" "contact photo";column-gap:clamp(28px,6vw,96px);align-items:start;padding-top:clamp(28px,4vw,56px)}
 .a-head{grid-area:head}.a-bio{grid-area:bio}.skills{grid-area:skills}.contact{grid-area:contact}
 .about .portrait{grid-area:photo;width:100%;max-width:360px;justify-self:end;aspect-ratio:4/5;height:auto;object-fit:cover;object-position:50% 30%;border-radius:3px}
-.about h1{font-size:clamp(28px,3.6vw,44px);font-weight:600;letter-spacing:-.015em;line-height:1.1}
+.about h1{font:800 clamp(48px,6.4vw,96px)/.88 var(--name);text-transform:uppercase}
 .about .role{color:var(--muted);margin:8px 0 24px}
 .a-bio p{color:var(--soft);max-width:60ch}
 .a-bio p + p{margin-top:12px}
-.skills{display:grid;grid-template-columns:max-content 1fr;gap:10px 24px;margin-top:32px;padding-top:24px;border-top:1px solid var(--line);font-size:14px}
-.skills dt{color:var(--muted)}
-.contact{margin-top:32px;padding-top:24px;border-top:1px solid var(--line);display:grid;grid-template-columns:max-content 1fr;gap:10px 24px;font-size:14px}
-.contact dt{color:var(--muted)}
+.skills,.contact{margin-top:32px;padding-top:24px;border-top:1px solid var(--line)}
 .contact a{border-bottom:1px solid var(--line);transition:border-color .2s}
 .contact a:hover{border-color:var(--fg)}
 
@@ -103,22 +127,37 @@ footer a:hover{color:var(--fg)}
 /* lightbox */
 .lb{position:fixed;inset:0;z-index:50;background:rgba(8,8,9,.97);display:none;align-items:center;justify-content:center}
 .lb.open{display:flex}
-.lb img{max-width:calc(100vw - 32px);max-height:calc(100vh - 96px);object-fit:contain}
+.lb img{max-width:calc(100vw - 32px);max-height:calc(100vh - 110px);object-fit:contain}
 .lb button{position:absolute;width:48px;height:48px;display:grid;place-items:center;font-size:24px;color:var(--muted);transition:color .2s}
 .lb button:hover{color:var(--fg)}
 .lb .x{top:10px;right:12px}
 .lb .pv{left:8px;top:50%;transform:translateY(-50%)}
 .lb .nx{right:8px;top:50%;transform:translateY(-50%)}
-.lb .ct{position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:var(--muted)}
+.lb .ct{position:absolute;bottom:20px;left:56px;right:56px;text-align:center;font-size:13px;color:var(--muted)}
 
+@media (min-width:761px) and (max-width:1100px){
+  .bento.even{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .bento.even .card:first-child{grid-column:1/-1}
+}
 @media (max-width:760px){
-  header .wrap{flex-direction:column;align-items:flex-start;gap:10px;padding-top:12px;padding-bottom:10px}
-  .grid{grid-template-columns:1fr}
+  header .wrap{flex-direction:column;align-items:flex-start;gap:8px;padding-top:12px;padding-bottom:10px}
+  body.home header:not(.scrolled) .brand{display:none}
+  .sec{scroll-margin-top:130px}
+  .hero{height:72vh;height:72svh;min-height:360px}
+  .hero .credit{display:none}
+  .bento,.bento.even,.pair{grid-template-columns:1fr}
+  .bento .card:first-child .img{aspect-ratio:16/9}
   .p-info{grid-template-columns:1fr}
   .about{grid-template-columns:1fr;grid-template-areas:"head" "photo" "bio" "skills" "contact"}
   .about .portrait{justify-self:start;max-width:240px;margin-bottom:24px}
   .lb .pv,.lb .nx{top:auto;bottom:6px;transform:none}
 }
+@media (max-width:440px){
+  dl{grid-template-columns:1fr;gap:2px}
+  dd{margin-bottom:10px}
+  .sec-h span{display:none}
+}
+@media (hover:none){.card:hover img{transform:none}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -127,14 +166,15 @@ footer a:hover{color:var(--fg)}
   <div class="wrap">
     <a class="brand" href="#/"><b>Sebastián Álvarez Delfín</b><span>Concept Artist · Ciudad de México</span></a>
     <nav>
-      <a href="#/" data-nav="work">Proyectos</a>
-      <a href="#/personajes" data-nav="characters">Personajes</a>
+      <a href="#/environment" data-nav="environment">Environment</a>
+      <a href="#/keyframes" data-nav="keyframes">Keyframes</a>
+      <a href="#/characters" data-nav="characters">Characters</a>
       <a href="#/sobre-mi" data-nav="about">Sobre mí</a>
     </nav>
   </div>
 </header>
 
-<main><div class="wrap" id="app"></div></main>
+<main id="app"></main>
 
 <footer>
   <div class="wrap">
@@ -157,71 +197,124 @@ footer a:hover{color:var(--fg)}
 </div>
 
 <script>
-// Orden = orden en que aparecen en el sitio (más reciente primero).
+// Secciones de la portada, en orden. El primer proyecto de cada sección sale grande.
+const SECTIONS = [
+  { id:'environment', title:'Environment Design' },
+  { id:'keyframes',   title:'Keyframes' },
+  { id:'characters',  title:'Character Design' }
+];
+
+// finals: piezas terminadas (van primero, a todo lo ancho)
+// compare: [imagen, texto] que va lado a lado con el primer final (antes/después)
+// process: [imagen, texto] láminas de proceso, en cuadrícula de 2
 const PROJECTS = [
-  { slug:'caperucita-roja', title:'Caperucita Roja', year:2026, tag:'Keyframe', group:'work', cover:'img/cover-caperucita.jpg',
-    shots:['caperucita-1','caperucita-2','caperucita-3','caperucita-4'],
-    desc:['Keyframe narrativo del momento previo a adentrarse en el bosque. La calidez del personaje contrasta con el tono misterioso del entorno para dirigir el punto focal.',
-          'Rework 2026 de mi pieza de 2024: mejor jerarquía visual, temperatura de color y pintado del personaje.'],
-    meta:[['Tipo','Keyframe · Rework'],['Proceso','Thumbnails → composición → pintura digital']] },
+  { slug:'aldea-japonesa', section:'environment', title:'Aldea Japonesa', year:2024, tag:'Environment Design', cover:'img/cover-aldea.jpg',
+    finals:['aldea-1'],
+    process:[['aldea-2','Pasadas de color, valor y render'],['aldea-3','Thumbnails'],['aldea-4','Moodboard: formas, color e iluminación']],
+    desc:['Entorno de época de arquitectura tradicional japonesa. Linternas y vigas en primer plano enmarcan la vista a través del poblado hasta el Monte Fuji.'],
+    meta:[['Enfoque','Composición por capas, arquitectura, matte painting'],['Pipeline','Thumbnails → Blender (blockout, iluminación) → Photoshop']] },
 
-  { slug:'midnight-incorporated', title:'Midnight Incorporated', year:2025, tag:'Keyframes · Environment Design', group:'work', cover:'img/cover-midnight.jpg',
-    shots:['midnight-1','midnight-2','midnight-3','midnight-4','midnight-5'],
-    desc:['Serie de cinco keyframes para el cortometraje/IP Midnight Incorporated, a partir del guion y la visión del director. El reto fue mantener la consistencia de estilo e iluminación entre escenas, siguiendo un style guide establecido.'],
-    meta:[['Rol','Keyframe & Environment Concept Artist'],['Dirección de arte','Luis F. Perez'],['Entregables','5 keyframes y layouts de exploración'],['Pipeline','Blender (blockout, iluminación) → Photoshop']] },
-
-  { slug:'camino-a-senguio', title:'Camino a Senguio', year:2025, tag:'Environment Design', group:'work', cover:'img/cover-camino.jpg',
-    shots:['camino-1','camino-2'],
+  { slug:'camino-a-senguio', section:'environment', title:'Camino a Senguio', year:2025, tag:'Environment Design · EAS Studio', cover:'img/cover-camino.jpg',
+    finals:['camino-1'],
+    process:[['camino-2','Sketch de layout']],
     desc:['Entorno de un pueblo rural mexicano para el proyecto Camino a Senguio. Atención al deterioro de materiales, la vegetación nativa y los props urbanos.'],
     meta:[['Estudio','EAS Studio'],['Rol','Layout 3D, environment design, texturizado y paintover'],['Pipeline','Blender (layout, iluminación base) → Photoshop']] },
 
-  { slug:'agente-secreto', title:'Agente Secreto', year:2025, tag:'Keyframes', group:'work', cover:'img/cover-agente.jpg',
-    shots:['agente-1','agente-2','agente-3','agente-4'],
-    desc:['Dos keyframes de secuencia (SEQ0300 y SEQ0400) con su exploración de thumbnails.'],
-    meta:[['Entregables','2 keyframes y thumbnails'],['Título provisional','Espía Secreto (así aparece en las láminas)']] },
-
-  { slug:'puerta-del-infierno', title:'Puerta del Infierno', year:2024, tag:'Environment Design', group:'work', cover:'img/cover-puerta.jpg',
-    shots:['puerta-1','puerta-2','puerta-3'],
+  { slug:'puerta-del-infierno', section:'environment', title:'Puerta del Infierno', year:2024, tag:'Environment Design', cover:'img/cover-puerta.jpg',
+    finals:['puerta-1'],
+    process:[['puerta-2','Moodboard: formas, iluminación y texturas'],['puerta-3','Sketches de cámara']],
     desc:['Umbral monumental de inspiración mesoamericana. La simetría de las estatuas guardianas y la luz sobre las escalinatas guían la mirada hacia la entrada.'],
     meta:[['Enfoque','Escala monumental, iluminación atmosférica, piedra'],['Pipeline','Blender (blockout, layout) → Photoshop (photobash, paintover)']] },
 
-  { slug:'aldea-japonesa', title:'Aldea Japonesa', year:2024, tag:'Environment Design', group:'work', cover:'img/cover-aldea.jpg',
-    shots:['aldea-1','aldea-2','aldea-3','aldea-4'],
-    desc:['Entorno de época de arquitectura tradicional japonesa. Linternas y vigas en primer plano enmarcan la vista a través del poblado hasta el Monte Fuji. Incluye el proceso completo: thumbnails, pruebas de iluminación, montaje 3D y pintura final.'],
-    meta:[['Enfoque','Composición por capas, arquitectura, matte painting'],['Pipeline','Thumbnails → Blender (blockout, iluminación) → Photoshop']] },
+  { slug:'midnight-incorporated', section:'keyframes', title:'Midnight Incorporated', year:2025, tag:'Keyframes · Environment Design', cover:'img/cover-midnight.jpg',
+    finals:['midnight-1','midnight-2','midnight-3','midnight-4','midnight-5'],
+    desc:['Serie de cinco keyframes para el cortometraje/IP Midnight Incorporated, a partir del guion y la visión del director. El reto fue mantener la consistencia de estilo e iluminación entre escenas, siguiendo un style guide establecido.'],
+    meta:[['Rol','Keyframe & Environment Concept Artist'],['Dirección de arte','Luis F. Perez'],['Entregables','5 keyframes y layouts de exploración'],['Pipeline','Blender (blockout, iluminación) → Photoshop']] },
 
-  { slug:'sangre-y-obsidiana', title:'Sangre y Obsidiana', year:2026, tag:'Character Design · IP original', group:'characters', cover:'img/cover-sangre.jpg',
-    shots:['sangre-1'],
+  { slug:'caperucita-roja', section:'keyframes', title:'Caperucita Roja', year:2026, tag:'Keyframe · Rework', cover:'img/cover-caperucita.jpg',
+    finals:['caperucita-1'],
+    compare:[['caperucita-1','2026'],['caperucita-2','2024 (original)']],
+    process:[['caperucita-3','Boceto y exploración de color'],['caperucita-4','Exploración de key shot, moodboard y boceto']],
+    desc:['Keyframe narrativo del momento previo a adentrarse en el bosque. La calidez del personaje contrasta con el tono misterioso del entorno para dirigir el punto focal.',
+          'Rework de mi pieza de 2024: mejor jerarquía visual, temperatura de color y pintado del personaje.'],
+    meta:[['Tipo','Keyframe · Rework'],['Proceso','Thumbnails → exploración de color → pintura digital']] },
+
+  { slug:'agente-secreto', section:'keyframes', title:'Agente Secreto', year:2025, tag:'Keyframes', cover:'img/cover-agente.jpg',
+    finals:['agente-1','agente-2'],
+    process:[['agente-3','Thumbnails · SEQ0400'],['agente-4','Thumbnails · SEQ0300']],
+    desc:['Dos keyframes de secuencia (SEQ0300 y SEQ0400) con su exploración de thumbnails.'],
+    meta:[['Entregables','2 keyframes y thumbnails'],['Título provisional','Espía Secreto (así aparece en las láminas)']] },
+
+  { slug:'sangre-y-obsidiana', section:'characters', title:'Sangre y Obsidiana', year:2026, tag:'Character Design · IP original', cover:'img/cover-sangre.jpg',
+    finals:['sangre-1'],
     desc:['Serie animada de fantasía oscura mesoamericana: un guerrero superviviente y una bestia primordial se unen para cazar al dios de la guerra que destruyó su clan.',
           'Lenguaje de formas directo, siluetas marcadas y proporciones agresivas. El lineup define la escala entre el dios colosal, el cazador y el jaguar emplumado.'],
     meta:[['Tipo','IP original · pitch de desarrollo visual'],['Rol','Creación de IP, diseño de personajes, worldbuilding'],['Público','Young adult / adulto (15–40)'],['Referencias','Primal, Samurai Jack, mitología mesoamericana'],['Herramientas','Photoshop, Procreate']] }
 ];
+const HERO = { img:'img/aldea-1.jpg', slug:'aldea-japonesa' };
+const ORDER = SECTIONS.flatMap(s => PROJECTS.filter(p => p.section === s.id));
+
 const src = s => `img/${s}.jpg`;
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const app = document.getElementById('app');
 const SITE = 'Sebastián Álvarez Delfín';
 
+// every image of a project in display order, for the lightbox
+const allShots = p => {
+  const seen = new Set(), out = [];
+  const add = (s, cap) => { if (!seen.has(s)) { seen.add(s); out.push([s, cap || '']); } };
+  (p.compare ? [p.compare[0][0]] : []).forEach(s => add(s, p.compare[0][1]));
+  p.finals.forEach(s => add(s));
+  (p.compare || []).forEach(([s, c]) => add(s, c));
+  (p.process || []).forEach(([s, c]) => add(s, c));
+  return out;
+};
+
 const card = p => `<a class="card" href="#/${p.slug}">
     <div class="img"><img src="${p.cover}" alt="${esc(p.title)}" loading="lazy" decoding="async"></div>
-    <div class="cap"><h2>${esc(p.title)}</h2><span class="meta">${esc(p.tag)} · ${p.year}</span></div></a>`;
+    <div class="cap"><h3>${esc(p.title)}</h3><span class="meta">${esc(p.tag)} · ${p.year}</span></div></a>`;
 
-const viewList = group => `<section class="view"><div class="grid">${PROJECTS.filter(p => p.group === group).map(card).join('')}</div></section>`;
+function viewHome(){
+  const h = PROJECTS.find(p => p.slug === HERO.slug);
+  return `<div class="view">
+    <section class="hero">
+      <img src="${HERO.img}" alt="${esc(h.title)}" fetchpriority="high">
+      <div class="txt"><div class="wrap">
+        <div><h1>Sebastián<br>Álvarez Delfín</h1><div class="role">Concept Artist — Environment Design · Keyframes · Character Design</div></div>
+        <a class="credit" href="#/${h.slug}">${esc(h.title)}, ${h.year}</a>
+      </div></div>
+    </section>
+    <div class="wrap">
+      ${SECTIONS.map(s => {
+        const list = PROJECTS.filter(p => p.section === s.id);
+        return `<section class="sec" id="${s.id}"><div class="sec-h"><h2>${s.title}</h2><span>${list.length} ${list.length === 1 ? 'proyecto' : 'proyectos'}</span></div>
+          <div class="bento${list.some(p => p.slug === HERO.slug) ? ' even' : ''}">${list.map(card).join('')}</div></section>`;
+      }).join('')}
+    </div>
+  </div>`;
+}
+
+const fig = (s, i, cap, title) => `<figure class="shot" data-i="${i}"><div class="fr"><img src="${src(s)}" alt="${esc(title)}${cap ? ' — ' + esc(cap) : ''}" loading="${i ? 'lazy' : 'eager'}" decoding="async" onload="this.classList.add('ld')"></div>${cap ? `<figcaption>${esc(cap)}</figcaption>` : ''}</figure>`;
 
 function viewProject(p){
-  const sib = PROJECTS.filter(x => x.group === p.group);
-  const i = sib.indexOf(p), prev = sib[(i - 1 + sib.length) % sib.length], next = sib[(i + 1) % sib.length];
-  const back = p.group === 'characters' ? ['#/personajes', 'Personajes'] : ['#/', 'Proyectos'];
-  return `<article class="view">
-    <div class="p-top"><div><h1>${esc(p.title)}</h1><div class="sub">${esc(p.tag)} · ${p.year}</div></div><a class="back" href="${back[0]}">← ${back[1]}</a></div>
+  const i = ORDER.indexOf(p), prev = ORDER[(i - 1 + ORDER.length) % ORDER.length], next = ORDER[(i + 1) % ORDER.length];
+  const shots = allShots(p), idx = s => shots.findIndex(x => x[0] === s);
+  const sec = SECTIONS.find(s => s.id === p.section);
+  const finals = p.compare
+    ? `<div class="pair">${p.compare.map(([s, c]) => fig(s, idx(s), c, p.title)).join('')}</div>`
+    : `<div class="finals">${p.finals.map(s => fig(s, idx(s), '', p.title)).join('')}</div>`;
+  return `<article class="view wrap">
+    <div class="p-top"><div><h1>${esc(p.title)}</h1><div class="sub">${esc(p.tag)} · ${p.year}</div></div><a class="back" href="#/${sec.id}">← ${sec.title}</a></div>
+    ${finals}
     <div class="p-info"><div>${p.desc.map(s => `<p>${esc(s)}</p>`).join('')}</div>
       <dl>${p.meta.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl></div>
-    <div class="shots">${p.shots.map((s, n) => `<figure class="shot" data-i="${n}"><img src="${src(s)}" alt="${esc(p.title)}, imagen ${n + 1} de ${p.shots.length}" loading="${n ? 'lazy' : 'eager'}" decoding="async" onload="this.classList.add('ld')"></figure>`).join('')}</div>
-    ${sib.length > 1 ? `<div class="pager"><a href="#/${prev.slug}"><small>← Anterior</small><span>${esc(prev.title)}</span></a><a href="#/${next.slug}"><small>Siguiente →</small><span>${esc(next.title)}</span></a></div>` : ''}
+    ${p.process ? `<div class="label">Proceso</div><div class="pair">${p.process.map(([s, c]) => fig(s, idx(s), c, p.title)).join('')}</div>` : ''}
+    <div class="pager"><a href="#/${prev.slug}"><small>← Anterior</small><span>${esc(prev.title)}</span></a><a href="#/${next.slug}"><small>Siguiente →</small><span>${esc(next.title)}</span></a></div>
   </article>`;
 }
 
-const viewAbout = () => `<section class="view about">
-    <div class="a-head"><h1>Sebastián Álvarez Delfín</h1><div class="role">Concept Artist & Visual Development · Ciudad de México</div></div>
+const viewAbout = () => `<section class="view wrap"><div class="about">
+    <div class="a-head"><h1>Sebastián<br>Álvarez Delfín</h1><div class="role">Concept Artist & Visual Development · Ciudad de México</div></div>
     <img class="portrait" src="img/sebastian.jpg" alt="Sebastián Álvarez Delfín" width="720" height="1078">
     <div class="a-bio">
       <p>Concept Artist especializado en environment design, keyframes y diseño de personajes para animación y videojuegos.</p>
@@ -240,16 +333,17 @@ const viewAbout = () => `<section class="view about">
       <dt>Instagram</dt><dd><a href="https://www.instagram.com/ssebartt" target="_blank" rel="noopener">@ssebartt</a></dd>
       <dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/juan-sebastián-álvarez-delfín-8326b8209" target="_blank" rel="noopener">Juan Sebastián Álvarez Delfín</a></dd>
     </dl>
-  </section>`;
+  </div></section>`;
 
 // lightbox
 const lb = document.getElementById('lb'), lbImg = document.getElementById('lbImg'), lbC = document.getElementById('lbC');
-let current = null, li = 0;
+let current = null, shots = [], li = 0;
 function show(n){
-  const s = current.shots; li = (n + s.length) % s.length;
-  lbImg.src = src(s[li]); lbImg.alt = `${current.title}, imagen ${li + 1} de ${s.length}`;
-  lbC.textContent = `${li + 1} / ${s.length}`;
-  document.getElementById('lbP').style.display = document.getElementById('lbN').style.display = s.length > 1 ? '' : 'none';
+  li = (n + shots.length) % shots.length;
+  const [s, cap] = shots[li];
+  lbImg.src = src(s); lbImg.alt = `${current.title}${cap ? ' — ' + cap : ''}`;
+  lbC.textContent = `${li + 1} / ${shots.length}${cap ? ' · ' + cap : ''}`;
+  document.getElementById('lbP').style.display = document.getElementById('lbN').style.display = shots.length > 1 ? '' : 'none';
 }
 function close(){ lb.classList.remove('open'); document.body.style.overflow = ''; }
 app.addEventListener('click', e => { const f = e.target.closest('.shot'); if (!f || !current) return; show(+f.dataset.i); lb.classList.add('open'); document.body.style.overflow = 'hidden'; });
@@ -265,26 +359,37 @@ let tx = null;
 lb.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
 lb.addEventListener('touchend', e => { if (tx === null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 50) show(li + (dx < 0 ? 1 : -1)); tx = null; });
 
-// router (acepta también las rutas viejas #/characters y #/about)
+// router. #/environment, #/keyframes, #/characters scroll to a section of the home page.
+// Old links (#/personajes, #/about) keep working.
+const ALIAS = { personajes:'characters', about:'sobre-mi' };
+let homeRendered = false;
 function route(){
-  const h = location.hash.replace(/^#\/?/, '');
+  let h = location.hash.replace(/^#\/?/, '');
+  h = ALIAS[h] || h;
   const p = PROJECTS.find(x => x.slug === h);
-  let nav = 'work', title = `${SITE} — Concept Artist`;
-  current = null;
-  close();
-  if (p){ app.innerHTML = viewProject(p); nav = p.group; current = p; title = `${p.title} — ${SITE}`; }
-  else if (h === 'personajes' || h === 'characters'){ app.innerHTML = viewList('characters'); nav = 'characters'; title = `Personajes — ${SITE}`; }
-  else if (h === 'sobre-mi' || h === 'about'){ app.innerHTML = viewAbout(); nav = 'about'; title = `Sobre mí — ${SITE}`; }
-  else app.innerHTML = viewList('work');
+  const sec = SECTIONS.find(s => s.id === h);
+  let nav = '', title = `${SITE} — Concept Artist`;
+  current = null; close();
+  document.body.classList.remove('home');
+  if (p){ app.innerHTML = viewProject(p); current = p; shots = allShots(p); nav = p.section; title = `${p.title} — ${SITE}`; homeRendered = false; scrollTo(0, 0); }
+  else if (h === 'sobre-mi'){ app.innerHTML = viewAbout(); nav = 'about'; title = `Sobre mí — ${SITE}`; homeRendered = false; scrollTo(0, 0); }
+  else {
+    document.body.classList.add('home');
+    const fresh = !homeRendered;
+    if (fresh){ app.innerHTML = viewHome(); homeRendered = true; }
+    if (sec){ nav = sec.id; title = `${sec.title} — ${SITE}`; setTimeout(() => document.getElementById(sec.id).scrollIntoView({ behavior: fresh ? 'auto' : 'smooth' }), fresh ? 60 : 0); }
+    else scrollTo(0, 0);
+  }
   document.title = title;
   document.querySelectorAll('[data-nav]').forEach(a => a.classList.toggle('on', a.dataset.nav === nav));
-  window.scrollTo(0, 0);
+  onScroll();
 }
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+const hdr = document.getElementById('hdr');
+function onScroll(){ hdr.classList.toggle('scrolled', scrollY > (document.body.classList.contains('home') ? innerHeight * .5 : 8)); }
+addEventListener('scroll', onScroll, { passive: true });
 addEventListener('hashchange', route);
 route();
-
-const hdr = document.getElementById('hdr');
-addEventListener('scroll', () => hdr.classList.toggle('scrolled', scrollY > 8), { passive: true });
 document.getElementById('yr').textContent = new Date().getFullYear();
 </script>
 </body>
