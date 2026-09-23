@@ -189,11 +189,12 @@ const SECTIONS = [
 ];
 // Para agregar un personaje nuevo: copia la entrada de Sangre y Obsidiana con section:'characters'.
 
+// Orden = orden en la galería. big:true = sale a todo lo ancho (entre dos grandes deja un número par de chicas).
 // finals: piezas terminadas (van primero, a todo lo ancho)
 // compare: [imagen, texto] que va lado a lado con el primer final (antes/después)
 // process: [imagen, texto] láminas de proceso, en cuadrícula de 2
 const PROJECTS = [
-  { slug:'aldea-japonesa', section:'environment', title:'Aldea Japonesa', year:2024, tag:'Environment Design', cover:'img/cover-aldea.jpg',
+  { big:true, slug:'aldea-japonesa', section:'environment', title:'Aldea Japonesa', year:2024, tag:'Environment Design', cover:'img/cover-aldea.jpg',
     finals:['aldea-1'],
     process:[['aldea-2','Pasadas de color, valor y render'],['aldea-3','Thumbnails'],['aldea-4','Moodboard: formas, color e iluminación']],
     desc:['Entorno de época de arquitectura tradicional japonesa. Linternas y vigas en primer plano enmarcan la vista a través del poblado hasta el Monte Fuji.'],
@@ -211,6 +212,12 @@ const PROJECTS = [
     desc:['Umbral monumental de inspiración mesoamericana. La simetría de las estatuas guardianas y la luz sobre las escalinatas guían la mirada hacia la entrada.'],
     meta:[['Enfoque','Escala monumental, iluminación atmosférica, piedra'],['Pipeline','Blender (blockout, layout) → Photoshop (photobash, paintover)']] },
 
+  { big:true, slug:'agente-secreto', section:'keyframes', title:'Agente Secreto', year:2025, tag:'Keyframes', cover:'img/cover-agente.jpg',
+    finals:['agente-1','agente-2'],
+    process:[['agente-3','Thumbnails · SEQ0400'],['agente-4','Thumbnails · SEQ0300']],
+    desc:['Dos keyframes de secuencia (SEQ0300 y SEQ0400) con su exploración de thumbnails.'],
+    meta:[['Entregables','2 keyframes y thumbnails'],['Título provisional','Espía Secreto (así aparece en las láminas)']] },
+
   { slug:'midnight-incorporated', section:'keyframes', title:'Midnight Incorporated', year:2025, tag:'Keyframes · Environment Design', cover:'img/cover-midnight.jpg',
     finals:['midnight-1','midnight-2','midnight-3','midnight-4','midnight-5'],
     desc:['Serie de cinco keyframes para el cortometraje/IP Midnight Incorporated, a partir del guion y la visión del director. El reto fue mantener la consistencia de estilo e iluminación entre escenas, siguiendo un style guide establecido.'],
@@ -224,22 +231,18 @@ const PROJECTS = [
           'Rework de mi pieza de 2024: mejor jerarquía visual, temperatura de color y pintado del personaje.'],
     meta:[['Proceso','Thumbnails → exploración de color → pintura digital']] },
 
-  { slug:'agente-secreto', section:'keyframes', title:'Agente Secreto', year:2025, tag:'Keyframes', cover:'img/cover-agente.jpg',
-    finals:['agente-1','agente-2'],
-    process:[['agente-3','Thumbnails · SEQ0400'],['agente-4','Thumbnails · SEQ0300']],
-    desc:['Dos keyframes de secuencia (SEQ0300 y SEQ0400) con su exploración de thumbnails.'],
-    meta:[['Entregables','2 keyframes y thumbnails'],['Título provisional','Espía Secreto (así aparece en las láminas)']] },
-
-  { slug:'sangre-y-obsidiana', section:'characters', title:'Sangre y Obsidiana', year:2026, tag:'Character Design', cover:'img/cover-sangre.jpg',
+  { big:true, slug:'sangre-y-obsidiana', section:'characters', title:'Sangre y Obsidiana', year:2026, tag:'Character Design', cover:'img/cover-sangre.jpg',
     finals:['sangre-1'],
     desc:['Serie animada de fantasía oscura mesoamericana: un guerrero superviviente y una bestia primordial se unen para cazar al dios de la guerra que destruyó su clan.',
           'Lenguaje de formas directo, siluetas marcadas y proporciones agresivas. El lineup define la escala entre el dios colosal, el cazador y el jaguar emplumado.'],
     meta:[['Tipo','IP original · pitch de desarrollo visual'],['Rol','Creación de IP, diseño de personajes, worldbuilding'],['Público','Young adult / adulto (15–40)'],['Referencias','Primal, Samurai Jack, mitología mesoamericana'],['Herramientas','Photoshop, Procreate']] }
 ];
-const ORDER = SECTIONS.flatMap(s => PROJECTS.filter(p => p.section === s.id));
+const ORDER = PROJECTS;
 const pageOf = p => SECTIONS.find(s => s.id === p.section).page;
 
 const src = s => `img/${s}.jpg`;
+// small file for phones, full-resolution file for big and Retina screens
+const srcset = (s, smW, fullW) => `img/${s}-sm.jpg ${smW}w, img/${s}.jpg ${fullW}w`;
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const app = document.getElementById('app');
 const SITE = 'Sebastián Álvarez Delfín';
@@ -255,9 +258,9 @@ const allShots = p => {
   return out;
 };
 
-const card = (p, i) => `<a class="card${i % 3 === 0 ? ' big' : ''}" href="#/${p.slug}">
-    <div class="img"><img src="${p.cover}" alt="${esc(p.title)}" loading="lazy" decoding="async"></div>
-    <div class="cap"><h3>${esc(p.title)}</h3><span class="meta">${p.year}</span></div></a>`;
+const card = p => { const c = p.cover.replace(/^img\/|\.jpg$/g, ''); return `<a class="card${p.big ? ' big' : ''}" href="#/${p.slug}">
+    <div class="img"><img src="img/${c}-sm.jpg" srcset="${srcset(c, 1024, 2560)}" sizes="${p.big ? '(max-width:1440px) 100vw, 1344px' : '(max-width:760px) 100vw, (max-width:1440px) 50vw, 672px'}" alt="${esc(p.title)}" loading="lazy" decoding="async"></div>
+    <div class="cap"><h3>${esc(p.title)}</h3><span class="meta">${p.year}</span></div></a>`; };
 
 function viewHome(){
   return `<div class="view wrap">
@@ -277,7 +280,7 @@ function viewCharacters(){
   </div>`;
 }
 
-const fig = (s, i, cap, title) => `<figure class="shot" data-i="${i}"><div class="fr"><img src="${src(s)}" alt="${esc(title)}${cap ? ' — ' + esc(cap) : ''}" loading="${i ? 'lazy' : 'eager'}" decoding="async" onload="this.classList.add('ld')"></div>${cap ? `<figcaption>${esc(cap)}</figcaption>` : ''}</figure>`;
+const fig = (s, i, cap, title, half) => `<figure class="shot" data-i="${i}"><div class="fr"><img src="img/${s}-sm.jpg" srcset="${srcset(s, 1600, 3840)}" sizes="${half ? '(max-width:760px) 100vw, (max-width:1440px) 50vw, 672px' : '(max-width:1440px) 100vw, 1344px'}" alt="${esc(title)}${cap ? ' — ' + esc(cap) : ''}" loading="${i ? 'lazy' : 'eager'}" decoding="async" onload="this.classList.add('ld')"></div>${cap ? `<figcaption>${esc(cap)}</figcaption>` : ''}</figure>`;
 
 function viewProject(p){
   const group = ORDER.filter(x => pageOf(x) === pageOf(p));
@@ -285,14 +288,14 @@ function viewProject(p){
   const shots = allShots(p), idx = s => shots.findIndex(x => x[0] === s);
   const sec = SECTIONS.find(s => s.id === p.section);
   const finals = p.compare
-    ? `<div class="pair">${p.compare.map(([s, c]) => fig(s, idx(s), c, p.title)).join('')}</div>`
+    ? `<div class="pair">${p.compare.map(([s, c]) => fig(s, idx(s), c, p.title, true)).join('')}</div>`
     : `<div class="finals">${p.finals.map(s => fig(s, idx(s), '', p.title)).join('')}</div>`;
   return `<article class="view wrap">
     <div class="p-top"><div><h1>${esc(p.title)}</h1><div class="sub">${p.year}</div></div><a class="back" href="#/${sec.page === 'characters' ? 'characters' : ''}">← ${sec.page === 'characters' ? 'Characters' : 'Projects'}</a></div>
     ${finals}
     <div class="p-info"><div>${p.desc.map(s => `<p>${esc(s)}</p>`).join('')}</div>
       <dl>${[['Disciplina', p.tag], ...p.meta].map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl></div>
-    ${p.process ? `<div class="label">Proceso</div><div class="pair">${p.process.map(([s, c]) => fig(s, idx(s), c, p.title)).join('')}</div>` : ''}
+    ${p.process ? `<div class="label">Proceso</div><div class="pair">${p.process.map(([s, c]) => fig(s, idx(s), c, p.title, true)).join('')}</div>` : ''}
     ${group.length < 2 ? '' : `<div class="pager"><a href="#/${prev.slug}"><small>← Anterior</small><span>${esc(prev.title)}</span></a><a href="#/${next.slug}"><small>Siguiente →</small><span>${esc(next.title)}</span></a></div>`}
   </article>`;
 }
