@@ -4,7 +4,7 @@ Concept Artist & Visual Development Artist · Ciudad de México
 
 Environment Design, Keyframe Illustration y Character Development para animación y videojuegos.
 
-**Sitio:** https://salvarezdelfin-glitch.github.io/portafolio/
+**Sitio:** https://sebastianalvarezdelfin.github.io/portafolio/
 
 - ArtStation: https://www.artstation.com/ssebasalvarez
 - Instagram: https://www.instagram.com/ssebartt
