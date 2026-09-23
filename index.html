@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sebastián Álvarez Delfín — Concept Artist</title>
+<meta name="description" content="Concept Artist & Visual Development Artist en Ciudad de México. Environment Design, Keyframe Illustration y Character Development para animación y videojuegos.">
+<meta property="og:title" content="Sebastián Álvarez Delfín — Concept Artist">
+<meta property="og:description" content="Environment Design, Keyframe Illustration y Character Development para animación y videojuegos.">
+<meta property="og:image" content="img/cover-aldea.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0e0e0f">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%230e0e0f'/><text x='32' y='44' font-family='Arial Black,Arial' font-weight='900' font-size='30' text-anchor='middle' fill='%23e8e2d6'>SA</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e0e0f; --bg2:#161618; --line:#2a2a2d; --fg:#ece7dd; --muted:#9a958c; --accent:#d9573b;
+  --head:'Big Shoulders Display',Impact,'Arial Narrow',sans-serif; --body:Inter,system-ui,sans-serif;
+  --gut:clamp(16px,4vw,56px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font:15px/1.65 var(--body);-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+/* header */
+header{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px var(--gut);background:rgba(14,14,15,.86);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .2s}
+header.scrolled{border-color:var(--line)}
+.brand{font:800 clamp(20px,2.4vw,26px)/1 var(--head);letter-spacing:.04em;text-transform:uppercase}
+.brand small{display:block;font:500 11px/1 var(--body);letter-spacing:.18em;color:var(--muted);margin-top:6px}
+nav{display:flex;gap:clamp(14px,2.4vw,32px)}
+nav a{font:600 12px/1 var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding:6px 0;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
+nav a:hover{color:var(--fg)}
+nav a.on{color:var(--fg);border-color:var(--accent)}
+
+main{flex:1;padding:0 var(--gut) 72px}
+.view{animation:fade .45s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* hero */
+.hero{padding:clamp(40px,8vw,96px) 0 clamp(28px,5vw,56px);max-width:960px}
+.hero h1{font:800 clamp(44px,8.5vw,112px)/.9 var(--head);text-transform:uppercase;letter-spacing:.01em}
+.hero h1 span{color:var(--accent)}
+.hero p{margin-top:18px;color:var(--muted);font-size:clamp(15px,1.5vw,17px);max-width:560px}
+.section-label{display:flex;align-items:center;gap:14px;font:600 11px/1 var(--body);letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:0 0 18px}
+.section-label::after{content:"";flex:1;height:1px;background:var(--line)}
+
+/* grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,360px),1fr));gap:clamp(10px,1.4vw,18px)}
+.card{position:relative;overflow:hidden;background:var(--bg2);aspect-ratio:16/9;border-radius:2px}
+.card img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1),filter .5s}
+.card::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.78),transparent 55%);opacity:.9;transition:opacity .4s}
+.card .cap{position:absolute;left:18px;right:18px;bottom:14px;z-index:1;display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+.card h3{font:800 clamp(20px,2vw,26px)/1 var(--head);text-transform:uppercase;letter-spacing:.03em}
+.card .yr{font:500 12px/1 var(--body);color:var(--muted);letter-spacing:.1em}
+.card .tag{display:block;font:500 11px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.card:hover img,.card:focus-visible img{transform:scale(1.045)}
+.card:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.grid.one{grid-template-columns:1fr}
+.grid.one .card{aspect-ratio:21/9}
+
+/* project */
+.back{display:inline-flex;align-items:center;gap:8px;margin:28px 0 0;font:600 12px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.back:hover{color:var(--fg)}
+.p-head{padding:clamp(24px,5vw,56px) 0 clamp(20px,3vw,32px);display:grid;gap:10px}
+.p-head .tag{font:600 12px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.p-head h1{font:800 clamp(40px,7.5vw,96px)/.92 var(--head);text-transform:uppercase}
+.p-head .yr{color:var(--muted);font-size:14px;letter-spacing:.1em}
+.p-body{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:clamp(24px,5vw,72px);padding-bottom:clamp(28px,4vw,48px);border-bottom:1px solid var(--line);margin-bottom:clamp(20px,3vw,36px)}
+.p-body .desc p{margin-bottom:14px;color:#d6d1c7;max-width:68ch}
+.p-body .desc h4{font:800 22px/1.1 var(--head);text-transform:uppercase;letter-spacing:.03em;margin:22px 0 10px}
+.p-body .desc h4:first-child{margin-top:0}
+dl{display:grid;gap:16px;align-content:start}
+dt{font:600 11px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+dd{font-size:14px;color:var(--fg)}
+.shots{display:grid;gap:clamp(10px,1.4vw,18px)}
+.shot{background:var(--bg2);cursor:zoom-in;overflow:hidden;border-radius:2px}
+.shot img{width:100%;height:auto;opacity:0;transition:opacity .6s}
+.shot img.ld{opacity:1}
+.next{display:flex;justify-content:space-between;gap:16px;margin-top:clamp(32px,5vw,56px);padding-top:24px;border-top:1px solid var(--line)}
+.next a{display:grid;gap:6px;max-width:48%}
+.next a:last-child{text-align:right;margin-left:auto}
+.next small{font:600 11px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.next span{font:800 clamp(20px,3vw,34px)/1 var(--head);text-transform:uppercase;transition:color .2s}
+.next a:hover span{color:var(--accent)}
+
+/* about */
+.about{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(28px,6vw,88px);padding-top:clamp(40px,7vw,88px)}
+.about h1{font:800 clamp(44px,7vw,92px)/.92 var(--head);text-transform:uppercase}
+.about .role{color:var(--accent);font:600 13px/1.4 var(--body);letter-spacing:.14em;text-transform:uppercase;margin:16px 0 26px}
+.about p{color:#d6d1c7;margin-bottom:14px;max-width:62ch}
+.skills{display:grid;gap:22px}
+.skills h3{font:600 11px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{border:1px solid var(--line);padding:6px 11px;font-size:13px;border-radius:999px}
+.contact{margin-top:clamp(36px,5vw,56px);border-top:1px solid var(--line);padding-top:24px;display:grid;gap:10px}
+.contact a{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);font:800 clamp(20px,2.6vw,30px)/1 var(--head);text-transform:uppercase;letter-spacing:.02em;transition:color .2s,padding .3s}
+.contact a small{font:500 13px/1 var(--body);letter-spacing:0;text-transform:none;color:var(--muted);overflow-wrap:anywhere;text-align:right}
+.contact a:hover{color:var(--accent);padding-left:8px}
+
+footer{padding:24px var(--gut);border-top:1px solid var(--line);display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;color:var(--muted);font-size:12px;letter-spacing:.06em}
+footer .soc{display:flex;gap:18px}
+footer a:hover{color:var(--fg)}
+
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:50;background:rgba(6,6,7,.96);display:none;align-items:center;justify-content:center}
+.lb.open{display:flex}
+.lb img{max-width:calc(100vw - 32px);max-height:calc(100vh - 96px);object-fit:contain;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.lb button{position:absolute;width:48px;height:48px;display:grid;place-items:center;font-size:26px;color:var(--muted);transition:color .2s}
+.lb button:hover{color:var(--fg)}
+.lb .x{top:10px;right:12px}
+.lb .pv{left:8px;top:50%;transform:translateY(-50%)}
+.lb .nx{right:8px;top:50%;transform:translateY(-50%)}
+.lb .ct{position:absolute;bottom:18px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.14em;color:var(--muted)}
+
+@media (max-width:760px){
+  header{flex-direction:column;align-items:flex-start;gap:14px;padding-top:14px;padding-bottom:12px}
+  .brand small{display:none}
+  .p-body,.about{grid-template-columns:1fr}
+  .grid.one .card{aspect-ratio:16/9}
+  .lb .pv,.lb .nx{top:auto;bottom:6px;transform:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header id="hdr">
+  <a class="brand" href="#/">Sebastián Álvarez Delfín<small>Concept Artist · Visual Development</small></a>
+  <nav>
+    <a href="#/" data-nav="work">Environments</a>
+    <a href="#/characters" data-nav="characters">Characters</a>
+    <a href="#/about" data-nav="about">About</a>
+  </nav>
+</header>
+
+<main id="app"></main>
+
+<footer>
+  <span>© <span id="yr"></span> Sebastián Álvarez Delfín · Ciudad de México</span>
+  <span class="soc">
+    <a href="https://www.artstation.com/ssebasalvarez" target="_blank" rel="noopener">ArtStation</a>
+    <a href="https://www.instagram.com/ssebartt" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.linkedin.com/in/juan-sebastián-álvarez-delfín-8326b8209" target="_blank" rel="noopener">LinkedIn</a>
+  </span>
+</footer>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Imagen ampliada">
+  <img id="lbImg" alt="">
+  <button class="x" id="lbX" aria-label="Cerrar">✕</button>
+  <button class="pv" id="lbP" aria-label="Anterior">←</button>
+  <button class="nx" id="lbN" aria-label="Siguiente">→</button>
+  <div class="ct" id="lbC"></div>
+</div>
+
+<script>
+const PROJECTS = [
+  { slug:'aldea-japonesa', title:'Aldea Japonesa', year:2024, tag:'Environment Concept Art', group:'work', cover:'img/cover-aldea.jpg',
+    shots:['aldea-1','aldea-2','aldea-3','aldea-4'],
+    desc:[
+      ['p','Concepto de entorno de época centrado en la arquitectura tradicional japonesa y la integración de paisaje natural. La composición utiliza elementos en primer plano (linternas y vigas de madera) como marco visual para dirigir la mirada a través del poblado ribereño hasta el Monte Fuji en el fondo, creando profundidad y escala.'],
+      ['p','El proyecto abarcó un proceso completo de producción visual, desde la exploración inicial en thumbnails y pruebas de iluminación narrativa, hasta el montaje en 3D y el pulido final en 2D.']],
+    meta:[['Software & Pipeline','Thumbnailing ➔ Blender (3D Blockout, Layout & Lighting) ➔ Photoshop (Photobash & Overpainting)'],
+          ['Enfoque técnico','Composición por capas (Depth & Framing), arquitectura tradicional, iluminación cálida de acento y pintado mate de fondo.']] },
+
+  { slug:'puerta-del-infierno', title:'Puerta del Infierno', year:2024, tag:'Environment Concept Art', group:'work', cover:'img/cover-puerta.jpg',
+    shots:['puerta-1','puerta-2','puerta-3'],
+    desc:[
+      ['p','Concepto de entorno enfocado en el diseño de un umbral monumental de inspiración mesoamericana. El objetivo fue construir una atmósfera opresiva y misteriosa, utilizando la simetría de las estatuas guardianas y la luz focal en las escalinatas para guiar la vista hacia el punto de entrada.'],
+      ['p','Se implementó un flujo de trabajo 3D/2D para maximizar la eficiencia en el renderizado de superficies de piedra, composición de ruinas y densidad de vegetación.']],
+    meta:[['Software & Pipeline','Blender (Blockout 3D & Layout) ➔ Photoshop (Photobash & Paintover)'],
+          ['Enfoque técnico','Composición monumental, escala de personaje vs. entorno, iluminación atmosférica y texturizado de piedra.']] },
+
+  { slug:'agente-secreto', title:'Agente Secreto', year:2025, tag:'Keyframe', group:'work', cover:'img/cover-agente.jpg',
+    shots:['agente-1','agente-2','agente-3','agente-4'], desc:[], meta:[] },
+
+  { slug:'camino-a-senguio', title:'Camino a Senguio', year:2025, tag:'Environment Concept Art', group:'work', cover:'img/cover-camino.jpg',
+    shots:['camino-1','camino-2'],
+    desc:[
+      ['p','Concepto de entorno desarrollado para el proyecto Camino a Senguio en colaboración con EAS Studios. La pieza explora la arquitectura, textura y atmósfera de un pueblo rural mexicano, cuidando el realismo en el deterioro de materiales, la vegetación nativa y los detalles de utilería (props) urbanos.'],
+      ['p','Se diseñó mediante un flujo de trabajo 2D/3D enfocado en optimizar tiempos de producción, utilizando modelos tridimensionales para la estructura de la calle y la perspectiva, seguido de una fase de texturizado, photobashing y pintura digital para los acabados finales.']],
+    meta:[['Estudio','EAS Studio (2025)'],['Rol','Layout 3D, Environment Design, Texturizado y Paintover Digital'],
+          ['Software','Blender (3D Layout & Base Lighting) ➔ Photoshop (Photobash & Digital Painting)']] },
+
+  { slug:'midnight-incorporated', title:'Midnight Incorporated', year:2025, tag:'Keyframe Series & Environment Design', group:'work', cover:'img/cover-midnight.jpg',
+    shots:['midnight-1','midnight-2','midnight-3','midnight-4','midnight-5'],
+    desc:[
+      ['p','Serie de keyframes desarrollados para el proyecto de cortometraje/IP Midnight Incorporated (2025). El rol principal consistió en trabajar bajo la dirección narrativa y visión de arte del director del proyecto, traduciendo sus ideas y requerimientos de guion en 5 escenas cinemáticas visualmente coherentes.'],
+      ['p','El reto principal fue mantener la consistencia estética y de iluminación a lo largo de las 5 piezas, adaptándome a un style guide específico. Se implementó un flujo de trabajo 2D/3D para agilizar la exploración de cámara, perspectiva de escenarios y valores de luz.']],
+    meta:[['Proyecto','Midnight Incorporated (Colaboración / Visual Development, 2025)'],['Rol','Keyframe & Environment Concept Artist'],
+          ['Dirección de Arte / IP','Luis F. Perez'],['Entregables','5 Keyframe Illustrations & Exploration Layouts'],
+          ['Pipeline','Blender (3D Blockout & Lighting) ➔ Photoshop (Photobashing & Digital Painting)']] },
+
+  { slug:'caperucita-roja', title:'Caperucita Roja', year:2026, tag:'Key Shot Rework', group:'work', cover:'img/cover-caperucita.jpg',
+    shots:['caperucita-1','caperucita-2','caperucita-3','caperucita-4'],
+    desc:[
+      ['h','Key Shot Rework'],
+      ['p','Una revisión de mi pieza de 2024 para medir mi evolución en el flujo de trabajo de Concept Art. En esta versión me enfoqué en mejorar la jerarquía visual, la temperatura de color y el pintado del personaje adaptado.'],
+      ['h','Keyframe — Caperucita Roja'],
+      ['p','Keyframe narrativo enfocado en la exploración visual de Caperucita Roja. El objetivo principal fue adaptar la propuesta de diseño de personaje existente a una escena con peso emocional, desarrollando la composición y el valor narrativo a partir de una fase previa de thumbnails.'],
+      ['p','La escena explora el momento previo a adentrarse en la profundidad del bosque, utilizando el contraste entre la calidez del personaje y el tono mágico/misterioso del entorno para guiar el punto focal.']],
+    meta:[] },
+
+  { slug:'sangre-y-obsidiana', title:'Sangre y Obsidiana', year:2026, tag:'Serie animada · Desarrollo visual', group:'characters', cover:'img/cover-sangre.jpg',
+    shots:['sangre-1'],
+    desc:[
+      ['p','Sangre y Obsidiana es una propuesta de propiedad intelectual (IP) y desarrollo visual para una serie animada dirigida a un público joven-adulto (15–40 años). La historia se sitúa en un universo de fantasía oscura mesoamericana, donde un guerrero superviviente y una bestia primordial unen fuerzas por pura necesidad de supervivencia, emprendiendo la cacería de una despiadada deidad de la guerra responsable de la destrucción de su clan.'],
+      ['h','Enfoque de diseño y worldbuilding'],
+      ['p','El desarrollo visual prioriza un lenguaje de formas directo, siluetas marcadas y proporciones agresivas para transmitir un tono visceral y primitivo. El lineup de personajes establece una jerarquía visual y una dinámica de escalas clara: desde la presencia colosal e imponente del dios de la guerra, hasta la postura ágil y terrenal del cazador y la ferocidad indomable del jaguar emplumado.']],
+    meta:[['Tipo de proyecto','IP Original / Pitch de Desarrollo Visual'],['Rol','Creador de IP, Diseñador de Personajes y Worldbuilding'],
+          ['Audiencia','Young Adult / Adult Animation (Fantasía Oscura / Acción)'],['Tono e inspiraciones','PRIMAL, Samurai Jack, Mitología Mesoamericana'],
+          ['Software','Photoshop, Procreate']] }
+];
+const src = s => `img/${s}.jpg`;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const app = document.getElementById('app');
+
+function card(p, big){
+  return `<a class="card" href="#/${p.slug}">
+    <img src="${p.cover}" alt="${esc(p.title)}" loading="lazy" decoding="async">
+    <div class="cap"><div><span class="tag">${esc(p.tag)}</span><h3>${esc(p.title)}</h3></div><span class="yr">${p.year}</span></div></a>`;
+}
+
+function viewWork(){
+  const list = PROJECTS.filter(p => p.group === 'work');
+  return `<section class="view">
+    <div class="hero"><h1>Mundos que<br>cuentan <span>historias</span></h1>
+    <p>Concept Artist y Visual Development Artist en Ciudad de México. Environment design, keyframes y personajes para animación y videojuegos.</p></div>
+    <div class="section-label">Environments & Keyframes</div>
+    <div class="grid">${list.map(p => card(p)).join('')}</div>
+  </section>`;
+}
+
+function viewCharacters(){
+  const list = PROJECTS.filter(p => p.group === 'characters');
+  return `<section class="view">
+    <div class="hero"><h1>Characters</h1><p>Diseño de personajes, lineups y desarrollo de IP original.</p></div>
+    <div class="section-label">Proyectos</div>
+    <div class="grid one">${list.map(p => card(p)).join('')}</div>
+  </section>`;
+}
+
+function viewProject(p){
+  const sib = PROJECTS.filter(x => x.group === p.group);
+  const i = sib.indexOf(p), prev = sib[(i - 1 + sib.length) % sib.length], next = sib[(i + 1) % sib.length];
+  const desc = p.desc.map(([t, s]) => t === 'h' ? `<h4>${esc(s)}</h4>` : `<p>${esc(s)}</p>`).join('');
+  const meta = p.meta.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('');
+  const back = p.group === 'characters' ? ['#/characters', 'Characters'] : ['#/', 'Todos los proyectos'];
+  return `<article class="view">
+    <a class="back" href="${back[0]}">← ${back[1]}</a>
+    <div class="p-head"><span class="tag">${esc(p.tag)}</span><h1>${esc(p.title)}</h1><span class="yr">${p.year}</span></div>
+    ${desc || meta ? `<div class="p-body"><div class="desc">${desc}</div><dl>${meta}</dl></div>` : ''}
+    <div class="shots">${p.shots.map((s, n) => `<figure class="shot" data-i="${n}"><img src="${src(s)}" alt="${esc(p.title)} — imagen ${n + 1}" loading="${n ? 'lazy' : 'eager'}" decoding="async" onload="this.classList.add('ld')"></figure>`).join('')}</div>
+    ${sib.length > 1 ? `<div class="next"><a href="#/${prev.slug}"><small>← Anterior</small><span>${esc(prev.title)}</span></a><a href="#/${next.slug}"><small>Siguiente →</small><span>${esc(next.title)}</span></a></div>` : ''}
+  </article>`;
+}
+
+function viewAbout(){
+  const chips = a => `<div class="chips">${a.map(s => `<span>${s}</span>`).join('')}</div>`;
+  return `<section class="view about">
+    <div>
+      <h1>Sebastián<br>Álvarez Delfín</h1>
+      <div class="role">Concept Artist & Visual Development Artist · Ciudad de México</div>
+      <p>¡Hola! Soy Sebastián Álvarez Delfín, Concept Artist e ilustrador en la Ciudad de México. Me especializo en Environment Design, Keyframe Illustration y Character Development para animación y videojuegos.</p>
+      <p>Mi flujo de trabajo combina storytelling visual en 2D con blockouts 3D y escultura digital para entregar assets listos para producción y mundos visuales convincentes. Me enfoco en crear arte que sirva a la narrativa, enriquezca el worldbuilding y agilice los pipelines de diseño.</p>
+      <div class="contact">
+        <a href="mailto:salvarezdelfin@gmail.com">Email <small>salvarezdelfin@gmail.com</small></a>
+        <a href="https://wa.me/525579806805" target="_blank" rel="noopener">WhatsApp <small>+52 55 7980 6805</small></a>
+        <a href="https://www.artstation.com/ssebasalvarez" target="_blank" rel="noopener">ArtStation <small>ssebasalvarez</small></a>
+        <a href="https://www.instagram.com/ssebartt" target="_blank" rel="noopener">Instagram <small>@ssebartt</small></a>
+        <a href="https://www.linkedin.com/in/juan-sebastián-álvarez-delfín-8326b8209" target="_blank" rel="noopener">LinkedIn <small>Juan Sebastián Álvarez Delfín</small></a>
+      </div>
+    </div>
+    <div class="skills">
+      <div><h3>Concept Art</h3>${chips(['Environment Design','Keyframe Illustration','Worldbuilding','Props'])}</div>
+      <div><h3>3D & Producción</h3>${chips(['Digital Sculpting','3D Blockouts','Lighting & Mood'])}</div>
+      <div><h3>Visual Development</h3>${chips(['Character Design','Visual Storytelling','Photobashing'])}</div>
+      <div><h3>Software</h3>${chips(['Photoshop','Blender','ZBrush','Procreate'])}</div>
+    </div>
+  </section>`;
+}
+
+let current = null;
+function route(){
+  const h = location.hash.replace(/^#\/?/, '');
+  const p = PROJECTS.find(x => x.slug === h);
+  let nav = 'work', title = 'Sebastián Álvarez Delfín — Concept Artist';
+  current = null;
+  close();
+  if (p){ app.innerHTML = viewProject(p); nav = p.group; current = p; title = `${p.title} — Sebastián Álvarez Delfín`; }
+  else if (h === 'characters'){ app.innerHTML = viewCharacters(); nav = 'characters'; title = 'Characters — Sebastián Álvarez Delfín'; }
+  else if (h === 'about'){ app.innerHTML = viewAbout(); nav = 'about'; title = 'About — Sebastián Álvarez Delfín'; }
+  else app.innerHTML = viewWork();
+  document.title = title;
+  document.querySelectorAll('[data-nav]').forEach(a => a.classList.toggle('on', a.dataset.nav === nav));
+  window.scrollTo(0, 0);
+}
+// lightbox
+const lb = document.getElementById('lb'), lbImg = document.getElementById('lbImg'), lbC = document.getElementById('lbC');
+let li = 0;
+function show(n){
+  const s = current.shots; li = (n + s.length) % s.length;
+  lbImg.src = src(s[li]); lbImg.alt = `${current.title} — imagen ${li + 1}`;
+  lbC.textContent = `${li + 1} / ${s.length}`;
+  document.getElementById('lbP').style.display = document.getElementById('lbN').style.display = s.length > 1 ? '' : 'none';
+}
+function close(){ lb.classList.remove('open'); document.body.style.overflow = ''; }
+app.addEventListener('click', e => { const f = e.target.closest('.shot'); if (!f || !current) return; show(+f.dataset.i); lb.classList.add('open'); document.body.style.overflow = 'hidden'; });
+document.getElementById('lbX').onclick = close;
+document.getElementById('lbP').onclick = e => { e.stopPropagation(); show(li - 1); };
+document.getElementById('lbN').onclick = e => { e.stopPropagation(); show(li + 1); };
+lb.addEventListener('click', e => { if (e.target === lb) close(); });
+addEventListener('keydown', e => {
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'Escape') close(); else if (e.key === 'ArrowLeft') show(li - 1); else if (e.key === 'ArrowRight') show(li + 1);
+});
+
+addEventListener('hashchange', route);
+route();
+
+const hdr = document.getElementById('hdr');
+addEventListener('scroll', () => hdr.classList.toggle('scrolled', scrollY > 8), { passive: true });
+document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
