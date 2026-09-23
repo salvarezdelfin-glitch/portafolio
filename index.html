@@ -51,7 +51,7 @@ main{flex:1;padding-bottom:88px}
 
 /* hero */
 .hero{padding:clamp(36px,7vw,96px) 0 clamp(4px,1vw,12px)}
-.hero h1{font:800 clamp(52px,9.5vw,148px)/.86 var(--name);text-transform:uppercase;letter-spacing:.005em}
+.hero h1{font:800 clamp(40px,6vw,88px)/.9 var(--name);text-transform:uppercase;letter-spacing:.005em}
 .hero .role{font-size:clamp(14px,1.4vw,17px);color:var(--soft);margin-top:16px}
 
 /* sections + bento grid */
@@ -102,7 +102,7 @@ dt{color:var(--muted)}
 .about{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);grid-template-areas:"head photo" "bio photo" "skills photo" "contact photo";column-gap:clamp(28px,6vw,96px);align-items:start;padding-top:clamp(28px,4vw,56px)}
 .a-head{grid-area:head}.a-bio{grid-area:bio}.skills{grid-area:skills}.contact{grid-area:contact}
 .about .portrait{grid-area:photo;width:100%;max-width:360px;justify-self:end;aspect-ratio:4/5;height:auto;object-fit:cover;object-position:50% 30%;border-radius:3px}
-.about h1{font:800 clamp(48px,6.4vw,96px)/.88 var(--name);text-transform:uppercase}
+.about h1{font:800 clamp(38px,4.8vw,68px)/.9 var(--name);text-transform:uppercase}
 .about .role{color:var(--muted);margin:8px 0 24px}
 .a-bio p{color:var(--soft);max-width:60ch}
 .a-bio p + p{margin-top:12px}
@@ -150,10 +150,9 @@ footer a:hover{color:var(--fg)}
   <div class="wrap">
     <a class="brand" href="#/"><b>Sebastián Álvarez Delfín</b><span>Concept Artist · Ciudad de México</span></a>
     <nav>
-      <a href="#/environment" data-nav="environment">Environment</a>
-      <a href="#/keyframes" data-nav="keyframes">Keyframes</a>
+      <a href="#/" data-nav="projects">Projects</a>
       <a href="#/characters" data-nav="characters">Characters</a>
-      <a href="#/sobre-mi" data-nav="about">Sobre mí</a>
+      <a href="#/about" data-nav="about">About me</a>
     </nav>
   </div>
 </header>
@@ -340,7 +339,7 @@ lb.addEventListener('touchend', e => { if (tx === null) return; const dx = e.cha
 
 // router. #/environment, #/keyframes, #/characters scroll to a section of the home page.
 // Old links (#/personajes, #/about) keep working.
-const ALIAS = { personajes:'characters', about:'sobre-mi' };
+const ALIAS = { personajes:'characters', 'sobre-mi':'about' };
 let homeRendered = false;
 function route(){
   let h = location.hash.replace(/^#\/?/, '');
@@ -351,7 +350,7 @@ function route(){
   current = null; close();
   document.body.classList.remove('home');
   if (p){ app.innerHTML = viewProject(p); current = p; shots = allShots(p); nav = p.section; title = `${p.title} — ${SITE}`; homeRendered = false; scrollTo(0, 0); }
-  else if (h === 'sobre-mi'){ app.innerHTML = viewAbout(); nav = 'about'; title = `Sobre mí — ${SITE}`; homeRendered = false; scrollTo(0, 0); }
+  else if (h === 'about'){ app.innerHTML = viewAbout(); nav = 'about'; title = `About me — ${SITE}`; homeRendered = false; scrollTo(0, 0); }
   else {
     document.body.classList.add('home');
     const fresh = !homeRendered;
@@ -360,7 +359,8 @@ function route(){
     else scrollTo(0, 0);
   }
   document.title = title;
-  document.querySelectorAll('[data-nav]').forEach(a => a.classList.toggle('on', a.dataset.nav === nav));
+  const tab = nav === 'characters' || nav === 'about' ? nav : 'projects';
+  document.querySelectorAll('[data-nav]').forEach(a => a.classList.toggle('on', a.dataset.nav === tab));
   onScroll();
 }
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
@@ -368,6 +368,8 @@ const hdr = document.getElementById('hdr');
 function onScroll(){ hdr.classList.toggle('scrolled', scrollY > (document.body.classList.contains('home') ? ((document.getElementById('top') || {}).offsetHeight || 8) - 40 : 8)); }
 addEventListener('scroll', onScroll, { passive: true });
 addEventListener('hashchange', route);
+// "Projects" while already on the home page: just go back to the top
+document.querySelector('[data-nav=projects]').addEventListener('click', e => { if (/^#\/?$/.test(location.hash) || !location.hash){ e.preventDefault(); scrollTo({ top: 0, behavior: 'smooth' }); } });
 route();
 document.getElementById('yr').textContent = new Date().getFullYear();
 </script>
