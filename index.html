@@ -89,11 +89,11 @@ dd{font-size:14px;color:var(--fg)}
 .next a:hover span{color:var(--accent)}
 
 /* about */
-.about{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(28px,6vw,88px);padding-top:clamp(40px,7vw,88px)}
+.about{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);grid-template-areas:"head photo" "bio photo" "contact skills";column-gap:clamp(28px,6vw,88px);align-items:start;padding-top:clamp(40px,7vw,88px)}
+.a-head{grid-area:head}.a-bio{grid-area:bio}.about .contact{grid-area:contact}.about .skills{grid-area:skills;margin-top:clamp(36px,5vw,56px)}.about .portrait{grid-area:photo}
 .about h1{font:800 clamp(44px,7vw,92px)/.92 var(--head);text-transform:uppercase}
-.about .who{display:flex;align-items:center;gap:14px;margin:20px 0 26px}
-.about .who img{width:64px;height:64px;flex:none;border-radius:50%;object-fit:cover;filter:grayscale(.35) contrast(1.02);border:1px solid var(--line)}
-.about .role{color:var(--accent);font:600 13px/1.4 var(--body);letter-spacing:.14em;text-transform:uppercase}
+.about .role{color:var(--accent);font:600 13px/1.4 var(--body);letter-spacing:.14em;text-transform:uppercase;margin:16px 0 26px}
+.about .portrait{width:100%;max-width:340px;aspect-ratio:4/5;height:auto;object-fit:cover;object-position:50% 30%;border-radius:2px;filter:saturate(.85)}
 .about p{color:#d6d1c7;margin-bottom:14px;max-width:62ch}
 .skills{display:grid;gap:22px}
 .skills h3{font:600 11px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
@@ -122,7 +122,10 @@ footer a:hover{color:var(--fg)}
 @media (max-width:760px){
   header{flex-direction:column;align-items:flex-start;gap:14px;padding-top:14px;padding-bottom:12px}
   .brand small{display:none}
-  .p-body,.about{grid-template-columns:1fr}
+  .p-body{grid-template-columns:1fr}
+  .about{grid-template-columns:1fr;grid-template-areas:"head" "photo" "bio" "skills" "contact"}
+  .about .portrait{max-width:260px;margin-bottom:24px}
+  .about .skills{margin-top:12px}
   .grid.one .card{aspect-ratio:16/9}
   .lb .pv,.lb .nx{top:auto;bottom:6px;transform:none}
 }
@@ -263,12 +266,15 @@ function viewProject(p){
 function viewAbout(){
   const chips = a => `<div class="chips">${a.map(s => `<span>${s}</span>`).join('')}</div>`;
   return `<section class="view about">
-    <div>
+    <div class="a-head">
       <h1>Sebastián<br>Álvarez Delfín</h1>
-      <div class="who"><img src="img/sebastian.jpg" alt="Foto de Sebastián Álvarez Delfín" width="64" height="64">
-      <div class="role">Concept Artist & Visual Development Artist · Ciudad de México</div></div>
+      <div class="role">Concept Artist & Visual Development Artist · Ciudad de México</div>
+    </div>
+    <img class="portrait" src="img/sebastian.jpg" alt="Foto de Sebastián Álvarez Delfín" width="720" height="1078">
+    <div class="a-bio">
       <p>¡Hola! Soy Sebastián Álvarez Delfín, Concept Artist e ilustrador en la Ciudad de México. Me especializo en Environment Design, Keyframe Illustration y Character Development para animación y videojuegos.</p>
       <p>Mi flujo de trabajo combina storytelling visual en 2D con blockouts 3D y escultura digital para entregar assets listos para producción y mundos visuales convincentes. Me enfoco en crear arte que sirva a la narrativa, enriquezca el worldbuilding y agilice los pipelines de diseño.</p>
+    </div>
       <div class="contact">
         <a href="mailto:salvarezdelfin@gmail.com">Email <small>salvarezdelfin@gmail.com</small></a>
         <a href="https://wa.me/525579806805" target="_blank" rel="noopener">WhatsApp <small>+52 55 7980 6805</small></a>
@@ -276,7 +282,6 @@ function viewAbout(){
         <a href="https://www.instagram.com/ssebartt" target="_blank" rel="noopener">Instagram <small>@ssebartt</small></a>
         <a href="https://www.linkedin.com/in/juan-sebastián-álvarez-delfín-8326b8209" target="_blank" rel="noopener">LinkedIn <small>Juan Sebastián Álvarez Delfín</small></a>
       </div>
-    </div>
     <div class="skills">
       <div><h3>Concept Art</h3>${chips(['Environment Design','Keyframe Illustration','Worldbuilding','Props'])}</div>
       <div><h3>3D & Producción</h3>${chips(['Digital Sculpting','3D Blockouts','Lighting & Mood'])}</div>
