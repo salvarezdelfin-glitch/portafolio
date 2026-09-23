@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sebastián Álvarez Delfín — Concept Artist</title>
-<meta name="description" content="Portafolio de Sebastián Álvarez Delfín, Concept Artist en Ciudad de México: environment design, keyframes y diseño de personajes para animación y videojuegos.">
+<title>Sebastián Álvarez Delfín — Ilustrador y Concept Artist</title>
+<meta name="description" content="Portafolio de Sebastián Álvarez Delfín, ilustrador y Concept Artist en Ciudad de México: environment design, keyframes y diseño de personajes para animación y videojuegos.">
 <link rel="canonical" href="https://sebastianalvarezdelfin.github.io/portafolio/">
-<meta property="og:title" content="Sebastián Álvarez Delfín — Concept Artist">
+<meta property="og:title" content="Sebastián Álvarez Delfín — Ilustrador y Concept Artist">
 <meta property="og:description" content="Environment design, keyframes y diseño de personajes para animación y videojuegos.">
 <meta property="og:image" content="https://sebastianalvarezdelfin.github.io/portafolio/img/cover-aldea.jpg">
 <meta property="og:url" content="https://sebastianalvarezdelfin.github.io/portafolio/">
@@ -38,8 +38,8 @@ header .wrap{display:flex;align-items:center;justify-content:space-between;gap:1
 .brand{display:grid;gap:1px;transition:opacity .3s}
 .brand b{font:800 clamp(20px,2vw,26px)/1 var(--name);text-transform:uppercase;letter-spacing:.03em}
 .brand span{font-size:12.5px;color:var(--muted)}
-nav{display:flex;flex-wrap:wrap;gap:6px clamp(14px,2.2vw,28px)}
-nav a{font-size:14px;color:var(--muted);padding:5px 0;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
+nav{display:flex;flex-wrap:wrap;gap:8px clamp(18px,2.6vw,34px)}
+nav a{font:700 12.5px/1 var(--font);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding:7px 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
 nav a:hover{color:var(--fg)}
 nav a.on{color:var(--fg);border-color:var(--fg)}
 /* on the home page the small name in the header appears once the big one scrolls away */
@@ -148,7 +148,7 @@ footer a:hover{color:var(--fg)}
 <body>
 <header id="hdr">
   <div class="wrap">
-    <a class="brand" href="#/"><b>Sebastián Álvarez Delfín</b><span>Concept Artist · Ciudad de México</span></a>
+    <a class="brand" href="#/"><b>Sebastián Álvarez Delfín</b><span>Ilustrador y Concept Artist · Ciudad de México</span></a>
     <nav>
       <a href="#/" data-nav="projects">Projects</a>
       <a href="#/characters" data-nav="characters">Characters</a>
@@ -260,7 +260,7 @@ function viewHome(){
   return `<div class="view wrap">
     <section class="hero" id="top">
       <h1>Sebastián<br>Álvarez Delfín</h1>
-      <div class="role">Concept Artist — Environment Design · Keyframes · Character Design</div>
+      <div class="role">Ilustrador y Concept Artist — Environment Design · Keyframes · Character Design</div>
     </section>
     <div>
       ${SECTIONS.map(s => {
@@ -292,10 +292,10 @@ function viewProject(p){
 }
 
 const viewAbout = () => `<section class="view wrap"><div class="about">
-    <div class="a-head"><h1>Sebastián<br>Álvarez Delfín</h1><div class="role">Concept Artist & Visual Development · Ciudad de México</div></div>
+    <div class="a-head"><h1>Sebastián<br>Álvarez Delfín</h1><div class="role">Ilustrador y Concept Artist · Ciudad de México</div></div>
     <img class="portrait" src="img/sebastian.jpg" alt="Sebastián Álvarez Delfín" width="720" height="1078">
     <div class="a-bio">
-      <p>Concept Artist especializado en environment design, keyframes y diseño de personajes para animación y videojuegos.</p>
+      <p>Ilustrador y Concept Artist especializado en environment design, keyframes y diseño de personajes para animación y videojuegos.</p>
       <p>Trabajo con blockouts 3D en Blender y pintura digital en Photoshop para llegar a imágenes listas para producción, al servicio de la narrativa.</p>
     </div>
     <dl class="skills">
@@ -346,7 +346,7 @@ function route(){
   h = ALIAS[h] || h;
   const p = PROJECTS.find(x => x.slug === h);
   const sec = SECTIONS.find(s => s.id === h);
-  let nav = '', title = `${SITE} — Concept Artist`;
+  let nav = '', title = `${SITE} — Ilustrador y Concept Artist`;
   current = null; close();
   document.body.classList.remove('home');
   if (p){ app.innerHTML = viewProject(p); current = p; shots = allShots(p); nav = p.section; title = `${p.title} — ${SITE}`; homeRendered = false; scrollTo(0, 0); }
